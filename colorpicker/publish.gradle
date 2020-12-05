@@ -1,0 +1,40 @@
+apply plugin: 'com.jfrog.bintray'
+
+group 'com.sergiobelga.colorpicker'
+version '1.0.0-dev01'
+
+project.ext {
+    mavGitUrl = 'https://github.com/serbelga/ComposeColorPicker.git'
+    mavProjectName = 'colorpicker'
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "ColorPicker for Jetpack Compose"
+    mavPublishToMavenLocal = true
+    mavSiteUrl = 'https://github.com/serbelga/ComposeColorPicker'
+}
+
+def properties = new Properties()
+properties.load(new FileInputStream("local.properties"))
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    publications = ['Production']
+    configurations = ['archives']
+    override = true
+    pkg {
+        repo = 'compose-components'
+        name = 'colorpicker'
+        description = "ColorPicker for Jetpack Compose"
+        publicDownloadNumbers = true
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/serbelga/ComposeColorPicker'
+        version {
+            name = this.version
+            desc = "Version ${this.version}"
+            released = new Date()
+            vcsTag = this.version
+        }
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
