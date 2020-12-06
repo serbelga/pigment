@@ -1,11 +1,17 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'com.jfrog.bintray'
+    id 'maven-publish'
+    id 'org.jetbrains.dokka'
 }
 
-apply from: 'publish.gradle'
-
 android {
+    lintOptions {
+        disable "UnsafeExperimentalUsageError",
+                "UnsafeExperimentalUsageWarning"
+    }
+
     compileSdkVersion 30
 
     defaultConfig {
@@ -50,13 +56,76 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+group 'com.sergiobelga.colorpicker'
+version '1.0.0-dev01'
+
+def properties = new Properties()
+properties.load(new FileInputStream("local.properties"))
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    publications = ['Publication']
+    pkg {
+        repo = 'compose-components'
+        name = 'colorpicker'
+        description = "ColorPicker for Jetpack Compose"
+        publicDownloadNumbers = true
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/serbelga/ComposeColorPicker'
+        version {
+            name = this.version
+            desc = "Version ${this.version}"
+            released = new Date()
+            vcsTag = this.version
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier = 'javadoc'
+    from dokkaJavadoc.outputDirectory
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        Publication(MavenPublication) {
+            // Define this explicitly if using implementation or api configurations
+            pom.withXml {
+                artifact("$buildDir/outputs/aar/colorpicker-release.aar")
+                artifact javadocJar
+                artifact sourcesJar
+
+                def dependenciesNode = asNode()['dependencies'][0] ?: asNode().appendNode('dependencies')
+                // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
 }

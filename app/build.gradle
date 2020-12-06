@@ -7,7 +7,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.sergiobelda.compose.colorpicker"
+        applicationId "com.sergiobelda.compose.catalog.colorpicker"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1

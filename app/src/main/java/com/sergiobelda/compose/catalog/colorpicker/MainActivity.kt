@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sergiobelda.compose.colorpicker
+package com.sergiobelda.compose.catalog.colorpicker
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
-import com.sergiobelda.compose.colorpicker.ui.ColorPickerTheme
+import com.sergiobelda.compose.catalog.colorpicker.ui.ColorPickerTheme
+import com.sergiobelda.compose.colorpicker.ColorPicker
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

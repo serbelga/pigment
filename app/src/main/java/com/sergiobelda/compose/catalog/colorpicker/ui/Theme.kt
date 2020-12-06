@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sergiobelda.compose.colorpicker.ui
+package com.sergiobelda.compose.catalog.colorpicker.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
