@@ -18,7 +18,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0-dev02"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -65,7 +65,7 @@ dependencies {
 }
 
 group 'com.sergiobelga.colorpicker'
-version '1.0.0-dev01'
+version '1.0.0-dev02'
 
 def properties = new Properties()
 properties.load(new FileInputStream("local.properties"))
@@ -108,7 +108,6 @@ artifacts {
 publishing {
     publications {
         Publication(MavenPublication) {
-            // Define this explicitly if using implementation or api configurations
             pom.withXml {
                 artifact("$buildDir/outputs/aar/colorpicker-release.aar")
                 artifact javadocJar
@@ -126,6 +125,7 @@ publishing {
                     }
                 }
             }
+            pom.packaging = "aar"
         }
     }
 }
