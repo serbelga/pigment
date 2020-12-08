@@ -1,20 +1,6 @@
 # ComposeColorPicker
 🎨 ColorPicker for Jetpack Compose
 
-### Project build.gradle
-
-```gradle
-allprojects {
-    repositories {
-        maven {
-            url "https://dl.bintray.com/serbelga/compose-components"
-        }
-    }
-}
-```
-
-### App module build.gradle
-
 ```gradle
 dependencies {
     implementation 'com.sergiobelda.compose.colorpicker:colorpicker:1.0.0-dev03'
