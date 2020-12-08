@@ -18,7 +18,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0.0-dev02"
+        versionName "1.0.0-dev03"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -64,8 +64,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-group 'com.sergiobelga.colorpicker'
-version '1.0.0-dev02'
+group 'com.sergiobelda.compose.colorpicker'
+version '1.0.0-dev03'
 
 def properties = new Properties()
 properties.load(new FileInputStream("local.properties"))
