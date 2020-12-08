@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 @OptIn(ExperimentalMaterialApi::class)
 fun BottomSheet() {
     val scaffoldState = rememberBottomSheetScaffoldState()
+    val dialogState = remember { mutableStateOf(false)  }
     val colors = listOf(
         Color(0xFFEF5350),
         Color(0xFFEC407A),
@@ -74,27 +75,54 @@ fun BottomSheet() {
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(12.dp)
                 )
-                Divider(thickness = 1.dp, color = Color.Black)
+                Divider(thickness = 1.dp, color = MaterialTheme.colors.onPrimary)
                 ColorPicker(
                     colors,
                     selectedColor,
                     onColorSelected,
-                    modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(12.dp)
                 )
             }
         },
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp
     ) {
-        Box(
+        Column(
             modifier = Modifier.fillMaxSize().background(selectedColor)
         ) {
             Button(
-                onClick = { scaffoldState.bottomSheetState.expand() },
-                modifier = Modifier.align(Alignment.Center)
+                onClick = { scaffoldState.bottomSheetState.expand() }
             ) {
-                Text("Select color")
+                Text("Open BottomSheet")
             }
+            Button(
+                onClick = { dialogState.value = true }
+            ) {
+                Text("Open Dialog")
+            }
+        }
+        if (dialogState.value) {
+            AlertDialog(
+                onDismissRequest = { dialogState.value = false },
+                title = {
+                    Text(
+                        "Select color",
+                        style = MaterialTheme.typography.body1
+                    )
+                },
+                text = {
+                    ColorPicker(
+                        colors,
+                        selectedColor,
+                        onColorSelected
+                    )
+                },
+                confirmButton = {
+                    Button(onClick = { dialogState.value = false }) {
+                        Text("OK")
+                    }
+                }
+            )
         }
     }
 }

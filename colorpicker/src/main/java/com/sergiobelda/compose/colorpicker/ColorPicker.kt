@@ -40,7 +40,7 @@ fun ColorPicker(
 ) {
     Box(modifier = modifier) {
         FlowRow(
-            mainAxisAlignment = MainAxisAlignment.Center,
+            mainAxisAlignment = MainAxisAlignment.SpaceBetween,
             mainAxisSize = SizeMode.Expand,
             crossAxisSpacing = 8.dp,
             mainAxisSpacing = 8.dp
