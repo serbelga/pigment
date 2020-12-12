@@ -19,6 +19,7 @@ package com.sergiobelda.compose.colorpicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -76,9 +77,10 @@ fun ColorItem(
     ) {
         if (color != null) {
             // Transparent background pattern
+            Box(modifier = Modifier.width(20.dp).fillMaxHeight().background(grey400))
             // Color indicator
             val colorModifier =
-                if (color.luminance() > 0.9 || color.luminance() < 0.1) {
+                if (color.luminance() < 0.1 || color.luminance() > 0.9) {
                     Modifier.fillMaxSize().background(color).border(
                         width = 1.dp,
                         color = MaterialTheme.colors.onSurface,
@@ -104,11 +106,7 @@ fun ColorItem(
                     modifier = Modifier
                         .fillMaxSize()
                         .align(Alignment.Center)
-                        .border(
-                            width = 2.dp,
-                            color = contentColorFor(MaterialTheme.colors.surface),
-                            shape = CircleShape
-                        )
+                        .background(if (isSystemInDarkTheme()) whiteAlpha20 else blackAlpha20)
                 )
             }
             // Color null indicator
