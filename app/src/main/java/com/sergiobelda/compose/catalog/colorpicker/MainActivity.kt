@@ -49,6 +49,11 @@ fun BottomSheet() {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val dialogState = remember { mutableStateOf(false)  }
     val colors = listOf(
+        null,
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
+        Color(0xFFFAFAFA),
+        Color(0x80FF4444),
         Color(0xFFEF5350),
         Color(0xFFEC407A),
         Color(0xFFAB47BC),
@@ -80,7 +85,7 @@ fun BottomSheet() {
                     colors,
                     selectedColor,
                     onColorSelected,
-                    modifier = Modifier.padding(12.dp)
+                    modifier = Modifier.padding(12.dp).align(Alignment.CenterHorizontally)
                 )
             }
         },
@@ -88,7 +93,7 @@ fun BottomSheet() {
         sheetPeekHeight = 0.dp
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().background(selectedColor)
+            modifier = Modifier.fillMaxSize().background(selectedColor ?: Color.White)
         ) {
             Button(
                 onClick = { scaffoldState.bottomSheetState.expand() }
@@ -111,11 +116,14 @@ fun BottomSheet() {
                     )
                 },
                 text = {
-                    ColorPicker(
-                        colors,
-                        selectedColor,
-                        onColorSelected
-                    )
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        ColorPicker(
+                            colors,
+                            selectedColor,
+                            onColorSelected,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                 },
                 confirmButton = {
                     Button(onClick = { dialogState.value = false }) {
