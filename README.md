@@ -3,7 +3,7 @@
 
 ```gradle
 dependencies {
-    implementation 'com.sergiobelda.compose.colorpicker:colorpicker:1.0.0-dev03'
+    implementation 'com.sergiobelda.compose.colorpicker:colorpicker:1.0.0-dev04'
 }
 ```
 
