@@ -21,16 +21,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
 import com.sergiobelda.compose.catalog.colorpicker.ui.ColorPickerTheme
 import com.sergiobelda.compose.colorpicker.ColorPicker
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,8 @@ class MainActivity : AppCompatActivity() {
 @OptIn(ExperimentalMaterialApi::class)
 fun BottomSheet() {
     val scaffoldState = rememberBottomSheetScaffoldState()
-    val dialogState = remember { mutableStateOf(false)  }
+    val coroutineScope = rememberCoroutineScope()
+    val dialogState = remember { mutableStateOf(false) }
     val colors = listOf(
         null,
         Color(0xFF000000),
@@ -85,7 +88,9 @@ fun BottomSheet() {
                     colors,
                     selectedColor,
                     onColorSelected,
-                    modifier = Modifier.padding(12.dp).align(Alignment.CenterHorizontally)
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
             }
         },
@@ -93,10 +98,16 @@ fun BottomSheet() {
         sheetPeekHeight = 0.dp
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().background(selectedColor ?: Color.White)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(selectedColor ?: Color.White)
         ) {
             Button(
-                onClick = { scaffoldState.bottomSheetState.expand() }
+                onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.bottomSheetState.expand()
+                    }
+                }
             ) {
                 Text("Open BottomSheet")
             }
