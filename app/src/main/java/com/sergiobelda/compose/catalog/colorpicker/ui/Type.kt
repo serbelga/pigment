@@ -18,15 +18,15 @@ package com.sergiobelda.compose.catalog.colorpicker.ui
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.font
-import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.unit.sp
 import com.sergiobelda.compose.catalog.colorpicker.R
 
-val workSansMedium = font(R.font.work_sans_medium, weight = FontWeight.Medium)
+val workSansMedium = Font(R.font.work_sans_medium, weight = FontWeight.Medium)
 
-val workSansFontFamily = fontFamily(listOf(workSansMedium))
+val workSansFontFamily = FontFamily(listOf(workSansMedium))
 
 val typography = Typography(
     body1 = TextStyle(
