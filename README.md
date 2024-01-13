@@ -1,12 +1,6 @@
-# ComposeColorPicker
+# Pigment
 
-🎨 ColorPicker for Jetpack Compose
-
-```gradle
-dependencies {
-    implementation 'com.sergiobelda.compose.colorpicker:colorpicker:1.0.0-dev04'
-}
-```
+🎨 A color selector for Jetpack Compose
 
 ## Usage
 
