@@ -1,0 +1,42 @@
+[versions]
+activityCompose = "1.8.2"
+androidGradlePlugin = "8.2.1"
+appcompat = "1.6.1"
+composeBom = "2023.10.01"
+composeCompiler = "1.5.8"
+coreKtx = "1.12.0"
+kotlin = "1.9.22"
+ktlint = "0.50.0"
+lifecycleRuntimeKtx = "2.6.2"
+spotless = "6.22.0"
+vanniktechMavenPublishPlugin = "0.26.0"
+
+[libraries]
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+androidx-compose-composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material = { module = "androidx.compose.material:material" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-uiGraphics = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
+
+androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+
+androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+vanniktechMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublishPlugin" }

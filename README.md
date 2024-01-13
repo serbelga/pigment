@@ -1,4 +1,5 @@
-# ComposeColorPicker
+# Pigment
+
 🎨 ColorPicker for Jetpack Compose
 
 ```gradle
