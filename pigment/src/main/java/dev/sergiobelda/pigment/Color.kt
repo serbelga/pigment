@@ -18,6 +18,6 @@ package dev.sergiobelda.pigment
 
 import androidx.compose.ui.graphics.Color
 
-val grey400 = Color(0xFFBDBDBD)
-val blackAlpha20 = Color(0x33000000)
-val whiteAlpha20 = Color(0x33FFFFFF)
+internal val grey400 = Color(0xFFBDBDBD)
+internal val blackAlpha20 = Color(0x33000000)
+internal val whiteAlpha20 = Color(0x33FFFFFF)
