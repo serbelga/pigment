@@ -15,9 +15,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "pigment-repo"
+rootProject.name = "pigment-library"
 
-include(":app")
+include(":catalog")
 include(":pigment")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

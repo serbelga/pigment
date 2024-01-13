@@ -21,7 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ColorPickerTheme(
+fun PigmentCatalogTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content:
     @Composable()

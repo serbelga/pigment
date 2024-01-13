@@ -44,7 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.ColorPicker
-import dev.sergiobelda.pigment.catalog.ui.ColorPickerTheme
+import dev.sergiobelda.pigment.catalog.ui.PigmentCatalogTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            ColorPickerTheme {
+            PigmentCatalogTheme {
                 BottomSheet()
             }
         }
