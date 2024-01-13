@@ -1,4 +1,4 @@
-# Pigment
+# ComposeColorPicker
 
 🎨 ColorPicker for Jetpack Compose
 
