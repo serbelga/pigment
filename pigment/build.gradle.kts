@@ -5,11 +5,12 @@ plugins {
 }
 
 android {
+    namespace = "dev.sergiobelda.pigment"
+
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,7 +33,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
-    namespace = "dev.sergiobelda.pigment"
 }
 
 dependencies {
