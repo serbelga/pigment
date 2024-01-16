@@ -1,8 +1,14 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("dev.sergiobelda.pigment-spotless")
+    alias(libs.plugins.vanniktechMavenPublish)
 }
+
+group = "dev.sergiobelda.pigment"
+version = libs.versions.pigment.get()
 
 android {
     namespace = "dev.sergiobelda.pigment"
@@ -40,4 +46,10 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01, true)
+
+    signAllPublications()
 }
