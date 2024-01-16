@@ -1,5 +1,7 @@
 # Pigment
 
+[![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.pigment/pigment)](https://search.maven.org/search?q=g:dev.sergiobelda.pigment)
+
 🎨 A color selector for Jetpack Compose
 
 ```gradle
