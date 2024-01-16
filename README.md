@@ -2,6 +2,12 @@
 
 🎨 A color selector for Jetpack Compose
 
+```gradle
+dependencies {
+    implementation 'dev.sergiobelda.pigment:pigment:$VERSION'
+}
+```
+
 ## Usage
 
 ```kotlin
