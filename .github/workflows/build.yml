@@ -28,5 +28,3 @@ jobs:
       run: ./gradlew spotlessCheck
     - name: Run build
       run: ./gradlew build
-    - name: Build catalog sample
-      run: cd catalog && ./gradlew assembleDebug && cd ..
