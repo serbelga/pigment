@@ -9,7 +9,7 @@ kotlin = "1.9.22"
 ktlint = "0.50.0"
 lifecycleRuntimeKtx = "2.7.0"
 pigment = "0.0.1"
-spotless = "6.22.0"
+spotless = "6.25.0"
 vanniktechMavenPublishPlugin = "0.27.0"
 
 [libraries]
