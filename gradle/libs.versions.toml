@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.8.2"
-androidGradlePlugin = "8.3.0"
+androidGradlePlugin = "8.3.1"
 appcompat = "1.6.1"
 composeBom = "2024.03.00"
 composeCompiler = "1.5.8"
