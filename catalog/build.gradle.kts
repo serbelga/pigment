@@ -46,4 +46,6 @@ dependencies {
     implementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycle.runtimeKtx)
+
+    implementation(libs.kotlin.collections.immutable)
 }

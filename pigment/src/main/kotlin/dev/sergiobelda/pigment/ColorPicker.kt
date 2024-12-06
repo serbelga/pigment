@@ -19,17 +19,23 @@ package dev.sergiobelda.pigment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowOverflow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -43,45 +49,95 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ColorPicker(
+fun ColorPickerFlowRow(
     colors: List<Color?>,
     selectedColor: Color?,
     onColorSelected: (color: Color?) -> Unit,
     modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    maxItemsInEachRow: Int = Int.MAX_VALUE,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: FlowRowOverflow = FlowRowOverflow.Clip,
 ) {
-    Column(modifier = modifier) {
-        FlowRow(
-            horizontalArrangement = Arrangement.Start,
-            verticalArrangement = Arrangement.Top,
-        ) {
-            colors.distinct().forEach { color ->
-                ColorItem(
-                    selected = color == selectedColor,
-                    color = color,
-                    onClick = { onColorSelected(color) },
-                )
-            }
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = horizontalArrangement,
+        verticalArrangement = verticalArrangement,
+        maxItemsInEachRow = maxItemsInEachRow,
+        maxLines = maxLines,
+        overflow = overflow
+    ) {
+        colors.forEach { color ->
+            ColorItem(
+                selected = color == selectedColor,
+                color = color,
+                onClick = { onColorSelected(color) },
+            )
         }
     }
 }
 
 @Composable
-fun ColorItem(
+fun ColorPickerLazyRow(
+    colors: ImmutableList<Color?>,
+    selectedColor: Color?,
+    onColorSelected: (color: Color?) -> Unit,
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    reverseLayout: Boolean = false,
+    horizontalArrangement: Arrangement.Horizontal =
+        if (!reverseLayout) Arrangement.Start else Arrangement.End,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    userScrollEnabled: Boolean = true
+) {
+    LazyRow(
+        modifier = modifier,
+        state = state,
+        contentPadding = contentPadding,
+        horizontalArrangement = horizontalArrangement,
+        verticalAlignment = verticalAlignment,
+        flingBehavior = flingBehavior,
+        userScrollEnabled = userScrollEnabled
+    ) {
+        items(
+            items = colors,
+            key = { color -> color?.toArgb() ?: 0 },
+            contentType = { color -> color?.toArgb() }
+        ) { color ->
+            ColorItem(
+                selected = color == selectedColor,
+                color = color,
+                onClick = { onColorSelected(color) },
+            )
+        }
+    }
+}
+
+@Composable
+inline fun ColorItem(
     selected: Boolean,
     color: Color?,
-    onClick: () -> Unit,
+    crossinline onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .padding(4.dp)
             .clip(CircleShape)
             .requiredSize(40.dp)
-            .clickable(onClick = onClick),
+            .clickable {
+                onClick.invoke()
+            }
     ) {
         if (color != null) {
             // Transparent background pattern
@@ -89,7 +145,7 @@ fun ColorItem(
                 modifier = Modifier
                     .width(20.dp)
                     .fillMaxHeight()
-                    .background(grey400),
+                    // .background(grey400),
             )
             // Color indicator
             val colorModifier =
@@ -125,12 +181,14 @@ fun ColorItem(
                     modifier = Modifier
                         .fillMaxSize()
                         .align(Alignment.Center)
-                        .background(if (isSystemInDarkTheme()) whiteAlpha20 else blackAlpha20),
+                        // .background(if (isSystemInDarkTheme()) whiteAlpha20 else blackAlpha20),
                 )
             }
             // Color null indicator
             Icon(
-                painterResource(R.drawable.ic_color_off_24dp),
+                imageVector = ImageVector.vectorResource(
+                    R.drawable.ic_color_off_24dp
+                ),
                 contentDescription = Icons.Default.Clear.name,
                 modifier = Modifier.align(Alignment.Center),
                 tint = contentColorFor(MaterialTheme.colors.surface),

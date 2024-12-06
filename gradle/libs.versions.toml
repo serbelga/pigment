@@ -5,6 +5,7 @@ appcompat = "1.7.0"
 composeBom = "2024.11.00"
 coreKtx = "1.15.0"
 kotlin = "2.0.21"
+kotlinCollectionsImmutable = "0.3.8"
 ktlint = "0.50.0"
 lifecycleRuntimeKtx = "2.8.7"
 materialIconsCore = "1.7.5"
@@ -32,6 +33,7 @@ androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" 
 
 androidx-lifecycle-runtimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 
+kotlin-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinCollectionsImmutable" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
