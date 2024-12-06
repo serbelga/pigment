@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.sergiobelda.pigment-spotless")
+    alias(libs.plugins.composeCompiler)
 }
 
 android {
@@ -31,9 +32,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     namespace = "dev.sergiobelda.pigment.catalog"
 }

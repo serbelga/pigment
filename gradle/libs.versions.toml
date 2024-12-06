@@ -2,12 +2,12 @@
 activityCompose = "1.9.3"
 androidGradlePlugin = "8.7.3"
 appcompat = "1.7.0"
-composeBom = "2024.03.00"
-composeCompiler = "1.5.11"
+composeBom = "2024.11.00"
 coreKtx = "1.15.0"
-kotlin = "1.9.23"
+kotlin = "2.0.21"
 ktlint = "0.50.0"
 lifecycleRuntimeKtx = "2.8.7"
+materialIconsCore = "1.7.5"
 pigment = "0.0.1"
 spotless = "6.25.0"
 vanniktechMavenPublishPlugin = "0.30.0"
@@ -22,6 +22,7 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-compose-composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
+androidx-compose-materialIconsCore = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-uiGraphics = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
@@ -38,6 +39,7 @@ spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 vanniktechMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublishPlugin" }

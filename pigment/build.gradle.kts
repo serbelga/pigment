@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("dev.sergiobelda.pigment-spotless")
     alias(libs.plugins.vanniktechMavenPublish)
+    alias(libs.plugins.composeCompiler)
 }
 
 group = "dev.sergiobelda.pigment"
@@ -36,14 +37,12 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
     implementation(platform(libs.androidx.compose.composeBom))
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.materialIconsCore)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
 }

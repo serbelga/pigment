@@ -112,7 +112,7 @@ fun ColorItem(
             ) {
                 if (selected) {
                     Icon(
-                        Icons.Default.Check,
+                        imageVector = Icons.Default.Check,
                         contentDescription = Icons.Default.Check.name,
                         tint = if (color.luminance() < 0.5) Color.White else Color.Black,
                         modifier = Modifier.align(Alignment.Center),
