@@ -45,8 +45,6 @@ dependencies {
     implementation(libs.androidx.compose.materialIconsCore)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
-
-    implementation(libs.kotlin.collections.immutable)
 }
 
 mavenPublishing {
