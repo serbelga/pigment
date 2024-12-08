@@ -1,26 +1,5 @@
-/*
- * Copyright 2024 Sergio Belda
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package dev.sergiobelda.pigment.catalog.main
 
-package dev.sergiobelda.pigment.catalog
-
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,57 +22,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.sergiobelda.pigment.ColorPickerFlowRow
-import dev.sergiobelda.pigment.ColorPickerLazyRow
-import dev.sergiobelda.pigment.catalog.ui.PigmentCatalogTheme
+import dev.sergiobelda.pigment.ColorPicker
+import dev.sergiobelda.pigment.catalog.R
+import dev.sergiobelda.pigment.catalog.colorItems
+import dev.sergiobelda.pigment.catalog.colors
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
-        setContent {
-            PigmentCatalogTheme {
-                BottomSheet()
-            }
-        }
-    }
-}
-
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-fun BottomSheet() {
+internal fun PigmentDemo() {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val dialogState = remember { mutableStateOf(false) }
-    val colors = remember {
-        listOf(
-            null,
-            Color(0xFF000000),
-            Color(0xFFFFFFFF),
-            Color(0xFFFAFAFA),
-            Color(0x80FF4444),
-            Color(0xFFEF5350),
-            Color(0xFFEC407A),
-            Color(0xFFAB47BC),
-            Color(0xFF7E57C2),
-            Color(0xFF5C6BC0),
-            Color(0xFF42A5F5),
-            Color(0xFF29B6F6),
-            Color(0xFF26C6DA),
-            Color(0xFF26A69A),
-            Color(0xFF66BB6A),
-            Color(0xFF9CCC65),
-            Color(0xFFD4E157),
-            Color(0xFFFFEE58),
-            Color(0xFFFFCA28),
-            Color(0xFFFFA726),
-            Color(0xFFFF7043),
-        ).toMutableStateList()
-    }
+    val colorItems = remember { colorItems.toMutableStateList() }
     val (selectedColor, onColorSelected) = remember { mutableStateOf(colors[0]) }
     BottomSheetScaffold(
         sheetContent = {
@@ -101,13 +45,13 @@ fun BottomSheet() {
                 modifier = Modifier.navigationBarsPadding(),
             ) {
                 Text(
-                    "Select color",
+                    text = stringResource(R.string.select_color),
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.padding(12.dp),
                 )
                 HorizontalDivider(color = MaterialTheme.colorScheme.onPrimary)
-                ColorPickerFlowRow(
-                    colors,
+                ColorPicker.FlowRow(
+                    colorItems.toImmutableList(),
                     selectedColor,
                     onColorSelected,
                     modifier = Modifier
@@ -122,7 +66,7 @@ fun BottomSheet() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(selectedColor ?: Color.White)
+                // .background(selectedColor ?: Color.White)
                 .systemBarsPadding(),
         ) {
             Button(
@@ -132,15 +76,15 @@ fun BottomSheet() {
                     }
                 },
             ) {
-                Text("Open BottomSheet")
+                Text(stringResource(R.string.open_bottomsheet))
             }
             Button(
                 onClick = { dialogState.value = true },
             ) {
-                Text("Open Dialog")
+                Text(stringResource(R.string.open_dialog))
             }
-            ColorPickerLazyRow(
-                colors = colors.toImmutableList(),
+            ColorPicker.LazyRow(
+                colors = colorItems.toImmutableList(),
                 selectedColor = selectedColor,
                 onColorSelected = onColorSelected,
             )
@@ -150,14 +94,14 @@ fun BottomSheet() {
                 onDismissRequest = { dialogState.value = false },
                 title = {
                     Text(
-                        "Select color",
+                        text = stringResource(R.string.select_color),
                         style = MaterialTheme.typography.bodySmall,
                     )
                 },
                 text = {
                     Column(modifier = Modifier.fillMaxWidth()) {
-                        ColorPickerFlowRow(
-                            colors = colors,
+                        ColorPicker.FlowRow(
+                            colors = colorItems.toImmutableList(),
                             selectedColor = selectedColor,
                             onColorSelected = onColorSelected,
                             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -166,7 +110,7 @@ fun BottomSheet() {
                 },
                 confirmButton = {
                     Button(onClick = { dialogState.value = false }) {
-                        Text("OK")
+                        Text(stringResource(R.string.ok))
                     }
                 },
             )

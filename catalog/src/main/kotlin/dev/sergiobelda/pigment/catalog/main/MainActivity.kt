@@ -14,10 +14,22 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment
+package dev.sergiobelda.pigment.catalog.main
 
-import androidx.compose.ui.graphics.Color
+import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import dev.sergiobelda.pigment.catalog.ui.PigmentCatalogTheme
 
-internal val grey400 = Color(0xFFBDBDBD)
-internal val blackAlpha20 = Color(0x33000000)
-internal val whiteAlpha20 = Color(0x33FFFFFF)
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        setContent {
+            PigmentCatalogTheme {
+                PigmentDemo()
+            }
+        }
+    }
+}

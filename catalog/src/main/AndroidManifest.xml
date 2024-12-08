@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pigment.Catalog">
         <activity
-            android:name="dev.sergiobelda.pigment.catalog.MainActivity"
+            android:name="dev.sergiobelda.pigment.catalog.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

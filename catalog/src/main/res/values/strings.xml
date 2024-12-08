@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pigment Catalog</string>
+    <string name="ok">OK</string>
+    <string name="open_bottomsheet">Open BottomSheet</string>
+    <string name="open_dialog">Open Dialog</string>
+    <string name="select_color">Select color</string>
 </resources>

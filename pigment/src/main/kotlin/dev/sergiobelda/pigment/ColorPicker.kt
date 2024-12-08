@@ -23,6 +23,7 @@ import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowOverflow
@@ -38,161 +39,254 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.CollectionInfo
+import androidx.compose.ui.semantics.collectionInfo
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun ColorPickerFlowRow(
-    colors: List<Color?>,
-    selectedColor: Color?,
-    onColorSelected: (color: Color?) -> Unit,
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    maxItemsInEachRow: Int = Int.MAX_VALUE,
-    maxLines: Int = Int.MAX_VALUE,
-    overflow: FlowRowOverflow = FlowRowOverflow.Clip,
-) {
-    FlowRow(
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        maxItemsInEachRow = maxItemsInEachRow,
-        maxLines = maxLines,
-        overflow = overflow
+/**
+ */
+object ColorPicker {
+
+    /**
+     */
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    fun FlowRow(
+        colors: List<ColorItem>,
+        selectedColor: Color?,
+        onColorSelected: (color: Color?) -> Unit,
+        modifier: Modifier = Modifier,
+        colorItemBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+        verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+        maxItemsInEachRow: Int = Int.MAX_VALUE,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: FlowRowOverflow = FlowRowOverflow.Clip,
     ) {
-        colors.forEach { color ->
-            ColorItem(
-                selected = color == selectedColor,
-                color = color,
-                onClick = { onColorSelected(color) },
-            )
+        FlowRow(
+            modifier = modifier.semantics {
+                collectionInfo = CollectionInfo(
+                    rowCount = maxLines,
+                    columnCount = colors.size.coerceAtMost(maxItemsInEachRow)
+                )
+            },
+            horizontalArrangement = horizontalArrangement,
+            verticalArrangement = verticalArrangement,
+            maxItemsInEachRow = maxItemsInEachRow,
+            maxLines = maxLines,
+            overflow = overflow
+        ) {
+            colors.forEach { colorItem ->
+                // TODO: Add Modifier.semantics { collectionItemInfo }
+                ColorItem(
+                    colorItem = colorItem,
+                    selected = colorItem.color == selectedColor,
+                    onClick = { onColorSelected(colorItem.color) },
+                    colorItemBorderWidth = colorItemBorderWidth,
+                )
+            }
+        }
+    }
+
+    /**
+     */
+    @Composable
+    fun LazyRow(
+        colors: List<ColorItem>,
+        selectedColor: Color?,
+        onColorSelected: (color: Color?) -> Unit,
+        modifier: Modifier = Modifier,
+        colorItemBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        state: LazyListState = rememberLazyListState(),
+        contentPadding: PaddingValues = PaddingValues(0.dp),
+        reverseLayout: Boolean = false,
+        horizontalArrangement: Arrangement.Horizontal =
+            if (!reverseLayout) Arrangement.Start else Arrangement.End,
+        verticalAlignment: Alignment.Vertical = Alignment.Top,
+        flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+        userScrollEnabled: Boolean = true
+    ) {
+        LazyRow(
+            modifier = modifier.semantics {
+                collectionInfo = CollectionInfo(
+                    rowCount = 1,
+                    columnCount = colors.size
+                )
+            },
+            state = state,
+            contentPadding = contentPadding,
+            horizontalArrangement = horizontalArrangement,
+            verticalAlignment = verticalAlignment,
+            flingBehavior = flingBehavior,
+            userScrollEnabled = userScrollEnabled,
+        ) {
+            items(
+                items = colors,
+                key = { colorItem -> colorItem.color?.toArgb() ?: 0 },
+                contentType = { colorItem -> colorItem.color?.toArgb() }
+            ) { colorItem ->
+                // TODO: Add Modifier.semantics { collectionItemInfo }
+                ColorItem(
+                    colorItem = colorItem,
+                    selected = colorItem.color == selectedColor,
+                    onClick = { onColorSelected(colorItem.color) },
+                    colorItemBorderWidth = colorItemBorderWidth
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ColorPickerLazyRow(
-    colors: ImmutableList<Color?>,
-    selectedColor: Color?,
-    onColorSelected: (color: Color?) -> Unit,
-    modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    reverseLayout: Boolean = false,
-    horizontalArrangement: Arrangement.Horizontal =
-        if (!reverseLayout) Arrangement.Start else Arrangement.End,
-    verticalAlignment: Alignment.Vertical = Alignment.Top,
-    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
-    userScrollEnabled: Boolean = true
-) {
-    LazyRow(
-        modifier = modifier,
-        state = state,
-        contentPadding = contentPadding,
-        horizontalArrangement = horizontalArrangement,
-        verticalAlignment = verticalAlignment,
-        flingBehavior = flingBehavior,
-        userScrollEnabled = userScrollEnabled
-    ) {
-        items(
-            items = colors,
-            key = { color -> color?.toArgb() ?: 0 },
-            contentType = { color -> color?.toArgb() }
-        ) { color ->
-            ColorItem(
-                selected = color == selectedColor,
-                color = color,
-                onClick = { onColorSelected(color) },
-            )
-        }
-    }
-}
-
-@Composable
-inline fun ColorItem(
+internal inline fun ColorItem(
+    colorItem: ColorItem,
     selected: Boolean,
-    color: Color?,
     crossinline onClick: () -> Unit,
+    colorItemBorderWidth: ColorIndicatorBorderWidth,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(4.dp)
             .clip(CircleShape)
             .requiredSize(40.dp)
-            .clickable {
+            .clickable(
+                enabled = colorItem.enabled
+            ) {
                 onClick.invoke()
             }
     ) {
-        if (color != null) {
-            // Transparent background pattern
-            Box(
-                modifier = Modifier
-                    .width(20.dp)
-                    .fillMaxHeight()
-                    // .background(grey400),
-            )
-            // Color indicator
-            val colorModifier =
-                if (color.luminance() < 0.1 || color.luminance() > 0.9) {
-                    Modifier
-                        .fillMaxSize()
-                        .background(color)
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colors.onSurface,
-                            shape = CircleShape,
-                        )
-                } else {
-                    Modifier
-                        .fillMaxSize()
-                        .background(color)
-                }
-            Box(
-                modifier = colorModifier,
-            ) {
-                if (selected) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = Icons.Default.Check.name,
-                        tint = if (color.luminance() < 0.5) Color.White else Color.Black,
-                        modifier = Modifier.align(Alignment.Center),
-                    )
-                }
-            }
-        } else {
-            if (selected) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .align(Alignment.Center)
-                        // .background(if (isSystemInDarkTheme()) whiteAlpha20 else blackAlpha20),
+        when {
+            colorItem.color != null -> {
+                ColorIndicator(
+                    color = colorItem.color,
+                    selected = selected,
+                    colorItemBorderWidth = colorItemBorderWidth
                 )
             }
-            // Color null indicator
+            else -> {
+                ColorNullIndicator(
+                    selected = selected
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun ColorIndicator(
+    color: Color,
+    selected: Boolean,
+    colorItemBorderWidth: ColorIndicatorBorderWidth
+) {
+    val selectedColor = if (color.luminance() < 0.5) {
+        Color.White
+    } else {
+        Color.Black
+    }
+    val borderWidth = when {
+        selected -> colorItemBorderWidth.selectedBorderWidth
+        color.luminance() !in 0.1..0.9 -> colorItemBorderWidth.neutralBorderWidth
+        else -> colorItemBorderWidth.unselectedBorderWidth
+    }
+
+    // Transparent background pattern
+    Box(
+        modifier = Modifier
+            .width(20.dp)
+            .fillMaxHeight()
+            .drawBehind {
+                drawRect(TransparentContrastColor)
+            }
+    )
+    // Color indicator
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .drawBehind {
+                drawCircle(color)
+            }
+            .border(
+                width = borderWidth,
+                color = selectedColor,
+                shape = CircleShape,
+            )
+    ) {
+        if (selected) {
             Icon(
                 imageVector = ImageVector.vectorResource(
-                    R.drawable.ic_color_off_24dp
+                    R.drawable.ic_check_24px
                 ),
-                contentDescription = Icons.Default.Clear.name,
+                contentDescription = stringResource(R.string.selected),
+                tint = selectedColor,
                 modifier = Modifier.align(Alignment.Center),
-                tint = contentColorFor(MaterialTheme.colors.surface),
             )
         }
     }
 }
+
+@Composable
+internal fun BoxScope.ColorNullIndicator(
+    selected: Boolean
+) {
+    if (selected) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .align(Alignment.Center)
+                .background(Color(0xFFFAFAFA)),
+        )
+    }
+    // Color null indicator
+    Icon(
+        imageVector = ImageVector.vectorResource(
+            R.drawable.ic_format_color_reset_24px
+        ),
+        contentDescription = stringResource(R.string.color_off),
+        modifier = Modifier.align(Alignment.Center),
+    )
+}
+
+@Immutable
+data class ColorIndicatorBorderWidth internal constructor(
+    val neutralBorderWidth: Dp,
+    val selectedBorderWidth: Dp,
+    val unselectedBorderWidth: Dp,
+)
+
+object ColorPickerDefaults {
+    private val NeutralBorderWidth: Dp = 1.dp
+
+    private val SelectedBorderWidth: Dp = 2.dp
+
+    private val UnselectedBorderWidth: Dp = Dp.Unspecified
+
+    @Stable
+    fun colorIndicatorBorderWidth(
+        neutralBorderWidth: Dp = NeutralBorderWidth,
+        selectedBorderWidth: Dp = SelectedBorderWidth,
+        unselectedBorderWidth: Dp = UnselectedBorderWidth,
+    ): ColorIndicatorBorderWidth =
+        ColorIndicatorBorderWidth(
+            neutralBorderWidth = neutralBorderWidth,
+            selectedBorderWidth = selectedBorderWidth,
+            unselectedBorderWidth = unselectedBorderWidth
+        )
+}
+
+private val TransparentContrastColor: Color = Color(0xFFBDBDBD)
