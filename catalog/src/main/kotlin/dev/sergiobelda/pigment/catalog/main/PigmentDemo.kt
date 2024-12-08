@@ -1,12 +1,19 @@
 package dev.sergiobelda.pigment.catalog.main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
@@ -22,6 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.ColorPicker
@@ -65,29 +74,46 @@ internal fun PigmentDemo() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                // .background(selectedColor ?: Color.White)
                 .systemBarsPadding(),
         ) {
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        scaffoldState.bottomSheetState.expand()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp)
+            ) {
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.bottomSheetState.expand()
+                        }
+                    },
+                ) {
+                    Text(stringResource(R.string.open_bottomsheet))
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Button(
+                    onClick = { dialogState.value = true },
+                ) {
+                    Text(stringResource(R.string.open_dialog))
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .drawBehind {
+                        selectedColor?.let {
+                            drawRect(it)
+                        }
                     }
-                },
             ) {
-                Text(stringResource(R.string.open_bottomsheet))
+                ColorPicker.LazyRow(
+                    colors = colorItems.toImmutableList(),
+                    selectedColor = selectedColor,
+                    onColorSelected = onColorSelected,
+                )
             }
-            Button(
-                onClick = { dialogState.value = true },
-            ) {
-                Text(stringResource(R.string.open_dialog))
-            }
-            ColorPicker.LazyRow(
-                colors = colorItems.toImmutableList(),
-                selectedColor = selectedColor,
-                onColorSelected = onColorSelected,
-            )
         }
         if (dialogState.value) {
             AlertDialog(

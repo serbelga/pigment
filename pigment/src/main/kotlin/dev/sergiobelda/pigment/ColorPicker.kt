@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -71,7 +72,8 @@ object ColorPicker {
         selectedColor: Color?,
         onColorSelected: (color: Color?) -> Unit,
         modifier: Modifier = Modifier,
-        colorItemBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        shape: Shape = ColorPickerDefaults.ColorItemShape,
+        colorIndicatorBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
         horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
         verticalArrangement: Arrangement.Vertical = Arrangement.Top,
         maxItemsInEachRow: Int = Int.MAX_VALUE,
@@ -97,7 +99,8 @@ object ColorPicker {
                     colorItem = colorItem,
                     selected = colorItem.color == selectedColor,
                     onClick = { onColorSelected(colorItem.color) },
-                    colorItemBorderWidth = colorItemBorderWidth,
+                    shape = shape,
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
                 )
             }
         }
@@ -111,7 +114,8 @@ object ColorPicker {
         selectedColor: Color?,
         onColorSelected: (color: Color?) -> Unit,
         modifier: Modifier = Modifier,
-        colorItemBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        shape: Shape = ColorPickerDefaults.ColorItemShape,
+        colorIndicatorBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
         state: LazyListState = rememberLazyListState(),
         contentPadding: PaddingValues = PaddingValues(0.dp),
         reverseLayout: Boolean = false,
@@ -145,7 +149,8 @@ object ColorPicker {
                     colorItem = colorItem,
                     selected = colorItem.color == selectedColor,
                     onClick = { onColorSelected(colorItem.color) },
-                    colorItemBorderWidth = colorItemBorderWidth
+                    shape = shape,
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth
                 )
             }
         }
@@ -158,14 +163,15 @@ internal inline fun ColorItem(
     colorItem: ColorItem,
     selected: Boolean,
     crossinline onClick: () -> Unit,
-    colorItemBorderWidth: ColorIndicatorBorderWidth,
+    shape: Shape,
+    colorIndicatorBorderWidth: ColorIndicatorBorderWidth,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             // TODO: Move literal value to const
             .padding(6.dp)
-            .clip(CircleShape)
+            .clip(shape)
             .requiredSize(48.dp)
             .clickable(
                 enabled = colorItem.enabled
@@ -178,7 +184,8 @@ internal inline fun ColorItem(
                 ColorIndicator(
                     color = colorItem.color,
                     selected = selected,
-                    colorItemBorderWidth = colorItemBorderWidth
+                    shape = shape,
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth
                 )
             }
             else -> {
@@ -194,7 +201,8 @@ internal inline fun ColorItem(
 internal fun ColorIndicator(
     color: Color,
     selected: Boolean,
-    colorItemBorderWidth: ColorIndicatorBorderWidth
+    shape: Shape,
+    colorIndicatorBorderWidth: ColorIndicatorBorderWidth
 ) {
     val selectedColor = if (color.luminance() < 0.5) {
         Color.White
@@ -202,9 +210,9 @@ internal fun ColorIndicator(
         Color.Black
     }
     val borderWidth = when {
-        selected -> colorItemBorderWidth.selectedBorderWidth
-        color.luminance() !in 0.1..0.9 -> colorItemBorderWidth.neutralBorderWidth
-        else -> colorItemBorderWidth.unselectedBorderWidth
+        selected -> colorIndicatorBorderWidth.selectedBorderWidth
+        color.luminance() !in 0.1..0.9 -> colorIndicatorBorderWidth.neutralBorderWidth
+        else -> colorIndicatorBorderWidth.unselectedBorderWidth
     }
 
     // Transparent background pattern
@@ -222,12 +230,12 @@ internal fun ColorIndicator(
         modifier = Modifier
             .fillMaxSize()
             .drawBehind {
-                drawCircle(color)
+                drawRect(color)
             }
             .border(
                 width = borderWidth,
                 color = selectedColor,
-                shape = CircleShape,
+                shape = shape,
             )
     ) {
         if (selected) {
@@ -275,14 +283,15 @@ data class ColorIndicatorBorderWidth internal constructor(
 )
 
 object ColorPickerDefaults {
-
-    // TODO: Add shape and item spacing
+    // TODO: Add item spacing
 
     private val NeutralBorderWidth: Dp = 1.dp
 
     private val SelectedBorderWidth: Dp = 2.dp
 
     private val UnselectedBorderWidth: Dp = Dp.Unspecified
+
+    val ColorItemShape = CircleShape
 
     @Stable
     fun colorIndicatorBorderWidth(
