@@ -152,6 +152,7 @@ object ColorPicker {
     }
 }
 
+// TODO: Add sizes
 @Composable
 internal inline fun ColorItem(
     colorItem: ColorItem,
@@ -162,6 +163,7 @@ internal inline fun ColorItem(
 ) {
     Box(
         modifier = modifier
+            // TODO: Move literal value to const
             .padding(4.dp)
             .clip(CircleShape)
             .requiredSize(40.dp)
@@ -208,6 +210,7 @@ internal fun ColorIndicator(
     // Transparent background pattern
     Box(
         modifier = Modifier
+            // TODO: Move literal value to const
             .width(20.dp)
             .fillMaxHeight()
             .drawBehind {
@@ -240,10 +243,12 @@ internal fun ColorIndicator(
     }
 }
 
+// TODO: Remove BoxScope
 @Composable
 internal fun BoxScope.ColorNullIndicator(
     selected: Boolean
 ) {
+    // TODO: Merge components and update null indicator selection UX.
     if (selected) {
         Box(
             modifier = Modifier
