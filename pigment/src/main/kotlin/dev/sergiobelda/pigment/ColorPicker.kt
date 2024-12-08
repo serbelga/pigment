@@ -164,9 +164,9 @@ internal inline fun ColorItem(
     Box(
         modifier = modifier
             // TODO: Move literal value to const
-            .padding(4.dp)
+            .padding(6.dp)
             .clip(CircleShape)
-            .requiredSize(40.dp)
+            .requiredSize(48.dp)
             .clickable(
                 enabled = colorItem.enabled
             ) {
@@ -211,7 +211,7 @@ internal fun ColorIndicator(
     Box(
         modifier = Modifier
             // TODO: Move literal value to const
-            .width(20.dp)
+            .width(24.dp)
             .fillMaxHeight()
             .drawBehind {
                 drawRect(TransparentContrastColor)
@@ -275,6 +275,9 @@ data class ColorIndicatorBorderWidth internal constructor(
 )
 
 object ColorPickerDefaults {
+
+    // TODO: Add shape and item spacing
+
     private val NeutralBorderWidth: Dp = 1.dp
 
     private val SelectedBorderWidth: Dp = 2.dp
