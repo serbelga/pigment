@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 object ColorPicker {
 
     /**
+     * @sample dev.sergiobelda.pigment.samples.ColorPickerFlowRowSample
      */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
@@ -107,6 +108,7 @@ object ColorPicker {
     }
 
     /**
+     * @sample dev.sergiobelda.pigment.samples.ColorPickerLazyRowSample
      */
     @Composable
     fun LazyRow(

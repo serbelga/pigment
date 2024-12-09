@@ -19,5 +19,6 @@ rootProject.name = "pigment-library"
 
 include(":catalog")
 include(":pigment")
+include(":pigment:samples")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

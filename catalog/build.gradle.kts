@@ -38,14 +38,17 @@ android {
 
 dependencies {
     implementation(projects.pigment)
+    implementation(projects.pigment.samples)
+    
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.lifecycle.runtimeKtx)
+
     implementation(platform(libs.androidx.compose.composeBom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.lifecycle.runtimeKtx)
 
     implementation(libs.kotlin.collections.immutable)
 }

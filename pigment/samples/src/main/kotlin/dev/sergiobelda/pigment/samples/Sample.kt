@@ -1,4 +1,4 @@
-package dev.sergiobelda.pigment.catalog
+package dev.sergiobelda.pigment.samples
 
 import androidx.compose.ui.graphics.Color
 import dev.sergiobelda.pigment.ColorItem
