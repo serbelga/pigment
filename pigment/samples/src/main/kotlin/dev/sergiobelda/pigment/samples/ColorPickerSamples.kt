@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.tooling.preview.Preview
 import dev.sergiobelda.pigment.ColorPicker
+import dev.sergiobelda.pigment.ColorPickerSize
 
 @OptIn(ExperimentalLayoutApi::class)
 @Preview
@@ -23,6 +24,38 @@ fun ColorPickerFlowRowSample() {
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Preview
+@Composable
+fun ColorPickerFlowRowMediumSample() {
+    val colorItems = remember { colorItems.toMutableStateList() }
+    val (selectedColor, onColorSelected) = remember {
+        mutableStateOf(colorItems.firstOrNull()?.color)
+    }
+    ColorPicker.FlowRow(
+        colors = colorItems,
+        selectedColor = selectedColor,
+        onColorSelected = onColorSelected,
+        size = ColorPickerSize.Medium
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Preview
+@Composable
+fun ColorPickerFlowRowLargeSample() {
+    val colorItems = remember { colorItems.toMutableStateList() }
+    val (selectedColor, onColorSelected) = remember {
+        mutableStateOf(colorItems.firstOrNull()?.color)
+    }
+    ColorPicker.FlowRow(
+        colors = colorItems,
+        selectedColor = selectedColor,
+        onColorSelected = onColorSelected,
+        size = ColorPickerSize.Large
+    )
+}
+
 @Preview
 @Composable
 fun ColorPickerLazyRowSample() {
@@ -34,5 +67,35 @@ fun ColorPickerLazyRowSample() {
         colors = colorItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected
+    )
+}
+
+@Preview
+@Composable
+fun ColorPickerLazyRowMediumSample() {
+    val colorItems = remember { colorItems.toMutableStateList() }
+    val (selectedColor, onColorSelected) = remember {
+        mutableStateOf(colorItems.firstOrNull()?.color)
+    }
+    ColorPicker.LazyRow(
+        colors = colorItems,
+        selectedColor = selectedColor,
+        onColorSelected = onColorSelected,
+        size = ColorPickerSize.Medium
+    )
+}
+
+@Preview
+@Composable
+fun ColorPickerLazyRowLargeSample() {
+    val colorItems = remember { colorItems.toMutableStateList() }
+    val (selectedColor, onColorSelected) = remember {
+        mutableStateOf(colorItems.firstOrNull()?.color)
+    }
+    ColorPicker.LazyRow(
+        colors = colorItems,
+        selectedColor = selectedColor,
+        onColorSelected = onColorSelected,
+        size = ColorPickerSize.Large
     )
 }
