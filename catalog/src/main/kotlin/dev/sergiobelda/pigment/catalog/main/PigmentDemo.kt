@@ -62,7 +62,7 @@ internal fun PigmentDemo() {
 
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
     val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(colorPickerItems.firstOrNull()?.color)
+        mutableStateOf(colorPickerItems.first().color)
     }
 
     BottomSheetScaffold(
@@ -107,9 +107,7 @@ internal fun PigmentDemo() {
                 modifier = Modifier
                     .fillMaxSize()
                     .drawBehind {
-                        selectedColor?.let {
-                            drawRect(it)
-                        }
+                        drawRect(selectedColor)
                     },
             ) {
                 ColorPicker.LazyRow(
@@ -134,8 +132,8 @@ internal fun PigmentDemo() {
 @Composable
 internal fun ColorPickerDialog(
     colors: List<ColorPickerItem>,
-    selectedColor: Color?,
-    onColorSelected: (color: Color?) -> Unit,
+    selectedColor: Color,
+    onColorSelected: (color: Color) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     AlertDialog(
@@ -170,8 +168,8 @@ internal fun ColorPickerDialog(
 @Composable
 internal fun ColorPickerBottomSheet(
     colors: List<ColorPickerItem>,
-    selectedColor: Color?,
-    onColorSelected: (color: Color?) -> Unit,
+    selectedColor: Color,
+    onColorSelected: (color: Color) -> Unit,
 ) {
     Column(
         modifier = Modifier

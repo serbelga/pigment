@@ -19,8 +19,8 @@ package dev.sergiobelda.pigment.sample
 import androidx.compose.ui.graphics.Color
 import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
 
-internal val colors = listOf(
-    null,
+internal val colors: List<Color> = listOf(
+    Color.Unspecified,
     Color.Black,
     Color.White,
     Color(0xFFFAFAFA),
@@ -43,7 +43,7 @@ internal val colors = listOf(
     Color(0xFFFF7043),
 )
 
-internal val colorPickerItems = colors.map {
+val colorPickerItems = colors.map {
     ColorPickerItem(
         color = it,
         enabled = true,
