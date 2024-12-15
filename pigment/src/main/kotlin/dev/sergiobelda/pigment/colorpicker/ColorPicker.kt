@@ -286,7 +286,7 @@ internal fun ColorNullIndicator(
                     ColorNullIndicatorIconSelectedColor
                 } else {
                     ColorNullIndicatorIconUnselectedColor
-                }
+                },
             ),
         )
         if (selected) {
@@ -296,7 +296,7 @@ internal fun ColorNullIndicator(
                 ),
                 contentDescription = stringResource(R.string.selected),
                 modifier = Modifier.align(Alignment.Center),
-                colorFilter = ColorFilter.tint(ColorNullIndicatorSelectedColor)
+                colorFilter = ColorFilter.tint(ColorNullIndicatorSelectedColor),
             )
         }
     }
