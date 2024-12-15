@@ -62,7 +62,7 @@ internal fun PigmentDemo() {
 
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
     val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(colorPickerItems.first().color)
+        mutableStateOf(Color.Unspecified)
     }
 
     BottomSheetScaffold(
