@@ -43,8 +43,7 @@ android {
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(platform(libs.androidx.compose.composeBom))
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.materialIconsCore)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
 

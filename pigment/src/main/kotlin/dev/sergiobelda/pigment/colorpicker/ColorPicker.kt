@@ -16,6 +16,7 @@
 
 package dev.sergiobelda.pigment.colorpicker
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
@@ -36,8 +37,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.ripple
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
@@ -250,12 +251,12 @@ internal fun ColorIndicator(
             ),
     ) {
         if (selected) {
-            Icon(
+            Image(
                 imageVector = ImageVector.vectorResource(
                     R.drawable.ic_check_24px,
                 ),
                 contentDescription = stringResource(R.string.selected),
-                tint = selectedColor,
+                colorFilter = ColorFilter.tint(selectedColor),
                 modifier = Modifier.align(Alignment.Center),
             )
         }
@@ -273,26 +274,29 @@ internal fun ColorNullIndicator(
                 drawRect(ColorNullIndicatorBackgroundColor)
             },
     ) {
-        Icon(
+        Image(
             imageVector = ImageVector.vectorResource(
                 R.drawable.ic_format_color_reset_24px,
             ),
             contentDescription = stringResource(R.string.color_off),
             modifier = Modifier
                 .align(Alignment.Center),
-            tint = if (selected) {
-                ColorNullIndicatorIconSelectedColor
-            } else {
-                ColorNullIndicatorIconUnselectedColor
-            },
+            colorFilter = ColorFilter.tint(
+                color = if (selected) {
+                    ColorNullIndicatorIconSelectedColor
+                } else {
+                    ColorNullIndicatorIconUnselectedColor
+                }
+            ),
         )
         if (selected) {
-            Icon(
+            Image(
                 imageVector = ImageVector.vectorResource(
                     R.drawable.ic_check_24px,
                 ),
                 contentDescription = stringResource(R.string.selected),
                 modifier = Modifier.align(Alignment.Center),
+                colorFilter = ColorFilter.tint(ColorNullIndicatorSelectedColor)
             )
         }
     }
@@ -391,6 +395,8 @@ private val ColorNullIndicatorIconSelectedColor: Color = Color.Black.copy(
 )
 
 private val ColorNullIndicatorIconUnselectedColor: Color = Color.Black
+
+private val ColorNullIndicatorSelectedColor: Color = Color.Black
 
 private val ColorNullIndicatorBackgroundColor: Color = Color.White
 
