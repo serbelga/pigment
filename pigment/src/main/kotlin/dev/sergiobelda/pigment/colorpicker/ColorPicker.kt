@@ -49,6 +49,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -72,8 +73,8 @@ object ColorPicker {
     @Composable
     fun FlowRow(
         colors: List<ColorPickerItem>,
-        selectedColor: Color?,
-        onColorSelected: (color: Color?) -> Unit,
+        selectedColor: Color,
+        onColorSelected: (color: Color) -> Unit,
         modifier: Modifier = Modifier,
         shape: Shape = ColorPickerDefaults.Shape,
         size: ColorPickerSize = ColorPickerDefaults.Size,
@@ -119,8 +120,8 @@ object ColorPicker {
     @Composable
     fun LazyRow(
         colors: List<ColorPickerItem>,
-        selectedColor: Color?,
-        onColorSelected: (color: Color?) -> Unit,
+        selectedColor: Color,
+        onColorSelected: (color: Color) -> Unit,
         modifier: Modifier = Modifier,
         shape: Shape = ColorPickerDefaults.Shape,
         size: ColorPickerSize = ColorPickerDefaults.Size,
@@ -151,8 +152,8 @@ object ColorPicker {
         ) {
             items(
                 items = colors,
-                key = { colorItem -> colorItem.color?.toArgb() ?: 0 },
-                contentType = { colorItem -> colorItem.color?.toArgb() },
+                key = { colorItem -> colorItem.color.toArgb() },
+                contentType = { colorItem -> colorItem.color.toArgb() },
             ) { colorItem ->
                 // TODO: Add Modifier.semantics { collectionItemInfo }
                 ColorItem(
@@ -178,14 +179,14 @@ internal inline fun ColorItem(
     size: ColorPickerSize,
     colorIndicatorColors: ColorIndicatorColors,
     colorIndicatorBorderWidth: ColorIndicatorBorderWidth,
-    modifier: Modifier = Modifier,
 ) {
-    val indicatorSize = size.indicatorSize()
     Box(
-        modifier = modifier
+        modifier = Modifier
             .padding(size.itemSpacing())
-            .clip(shape)
-            .requiredSize(indicatorSize)
+            .graphicsLayer {
+                this.shape = shape
+                clip = true
+            }
             .clickable(
                 enabled = colorItem.enabled,
                 indication = ripple(),
@@ -194,22 +195,33 @@ internal inline fun ColorItem(
                 onClick.invoke()
             },
     ) {
-        when {
-            colorItem.color != null -> {
-                ColorIndicator(
-                    color = colorItem.color,
-                    selected = selected,
-                    shape = shape,
-                    indicatorSize = indicatorSize,
-                    colorIndicatorColors = colorIndicatorColors,
-                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
-                )
-            }
+        val indicatorSize = size.indicatorSize()
+        Box(
+            modifier = Modifier
+                .padding(ColorItemInnerPadding)
+                .graphicsLayer {
+                    this.shape = shape
+                    clip = true
+                }
+                .requiredSize(indicatorSize),
+        ) {
+            when {
+                colorItem.color != Color.Unspecified -> {
+                    ColorIndicator(
+                        color = colorItem.color,
+                        selected = selected,
+                        shape = shape,
+                        indicatorSize = indicatorSize,
+                        colorIndicatorColors = colorIndicatorColors,
+                        colorIndicatorBorderWidth = colorIndicatorBorderWidth,
+                    )
+                }
 
-            else -> {
-                ColorNullIndicator(
-                    selected = selected,
-                )
+                else -> {
+                    ColorUnspecifiedIndicator(
+                        selected = selected,
+                    )
+                }
             }
         }
     }
@@ -264,14 +276,14 @@ internal fun ColorIndicator(
 }
 
 @Composable
-internal fun ColorNullIndicator(
+internal fun ColorUnspecifiedIndicator(
     selected: Boolean,
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .drawBehind {
-                drawRect(ColorNullIndicatorBackgroundColor)
+                drawRect(ColorUnspecifiedIndicatorBackgroundColor)
             },
     ) {
         Image(
@@ -283,9 +295,9 @@ internal fun ColorNullIndicator(
                 .align(Alignment.Center),
             colorFilter = ColorFilter.tint(
                 color = if (selected) {
-                    ColorNullIndicatorIconSelectedColor
+                    ColorUnspecifiedIndicatorIconSelectedColor
                 } else {
-                    ColorNullIndicatorIconUnselectedColor
+                    ColorUnspecifiedIndicatorIconUnselectedColor
                 },
             ),
         )
@@ -296,7 +308,7 @@ internal fun ColorNullIndicator(
                 ),
                 contentDescription = stringResource(R.string.selected),
                 modifier = Modifier.align(Alignment.Center),
-                colorFilter = ColorFilter.tint(ColorNullIndicatorSelectedColor),
+                colorFilter = ColorFilter.tint(ColorUnspecifiedIndicatorSelectedColor),
             )
         }
     }
@@ -388,19 +400,21 @@ object ColorPickerDefaults {
     private val UnselectedBorderWidth: Dp = Dp.Unspecified
 }
 
-private const val ColorNullIndicatorIconAlpha: Float = 0.2f
+private const val ColorUnspecifiedIndicatorIconAlpha: Float = 0.2f
 
-private val ColorNullIndicatorIconSelectedColor: Color = Color.Black.copy(
-    alpha = ColorNullIndicatorIconAlpha,
+private val ColorUnspecifiedIndicatorIconSelectedColor: Color = Color.Black.copy(
+    alpha = ColorUnspecifiedIndicatorIconAlpha,
 )
 
-private val ColorNullIndicatorIconUnselectedColor: Color = Color.Black
+private val ColorUnspecifiedIndicatorIconUnselectedColor: Color = Color.Black
 
-private val ColorNullIndicatorSelectedColor: Color = Color.Black
+private val ColorUnspecifiedIndicatorSelectedColor: Color = Color.Black
 
-private val ColorNullIndicatorBackgroundColor: Color = Color.White
+private val ColorUnspecifiedIndicatorBackgroundColor: Color = Color.White
 
-private val ColorItemSpacing: Dp = 6.dp
+private val ColorItemSpacing: Dp = 4.dp
+
+private val ColorItemInnerPadding: Dp = 2.dp
 
 private val ColorPickerSizeSmall: Dp = 36.dp
 

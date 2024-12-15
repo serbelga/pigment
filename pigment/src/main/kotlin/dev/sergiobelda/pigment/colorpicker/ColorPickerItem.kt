@@ -23,6 +23,6 @@ import androidx.compose.ui.graphics.Color
  */
 @Immutable
 data class ColorPickerItem(
-    val color: Color?,
+    val color: Color,
     val enabled: Boolean = true,
 )

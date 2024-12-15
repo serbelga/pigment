@@ -17,6 +17,7 @@
 package dev.sergiobelda.pigment.colorpicker
 
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.ui.graphics.Color
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
@@ -45,7 +46,7 @@ class ColorPickerTest {
         paparazzi.snapshot {
             ColorPicker.FlowRow(
                 colors = colorPickerItems,
-                selectedColor = null,
+                selectedColor = Color.Unspecified,
                 onColorSelected = {},
                 size = size,
             )
@@ -73,7 +74,7 @@ class ColorPickerTest {
         paparazzi.snapshot {
             ColorPicker.LazyRow(
                 colors = colorPickerItems,
-                selectedColor = null,
+                selectedColor = Color.Unspecified,
                 onColorSelected = {},
                 size = size,
             )
