@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.samples
+package dev.sergiobelda.pigment.samples.colorpicker
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import dev.sergiobelda.pigment.ColorPickerSize
+import dev.sergiobelda.pigment.colorpicker.ColorPickerSize
 
 internal class ColorPickerSizeProvider : PreviewParameterProvider<ColorPickerSize> {
     override val values: Sequence<ColorPickerSize>

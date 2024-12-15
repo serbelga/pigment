@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment
+package dev.sergiobelda.pigment.colorpicker
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 /**
  */
 @Immutable
-data class ColorItem(
+data class ColorPickerItem(
     val color: Color?,
     val enabled: Boolean = true,
 )

@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
     implementation(platform(libs.androidx.compose.composeBom))
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.materialIconsCore)

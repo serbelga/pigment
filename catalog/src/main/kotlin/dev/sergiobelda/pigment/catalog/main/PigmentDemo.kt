@@ -44,8 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.catalog.R
-import dev.sergiobelda.pigment.samples.ColorPickerFlowRowSample
-import dev.sergiobelda.pigment.samples.ColorPickerLazyRowSample
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
 import kotlinx.coroutines.launch
 
 @Composable
