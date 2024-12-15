@@ -12,7 +12,7 @@ dependencies {
 
 ## Usage
 
-### FlowRow
+### ColorPicker.FlowRow
 
 <img src="./screenshots/ColorPicker_FlowRow.png" width="240" />
 
@@ -35,7 +35,7 @@ ColorPicker.FlowRow(
 )
 ```
 
-### LazyRow
+### ColorPicker.LazyRow
 
 <img src="./screenshots/ColorPicker_LazyRow.png" width="240" />
 
