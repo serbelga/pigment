@@ -1,3 +1,4 @@
+import com.android.build.gradle.tasks.SourceJarTask
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
@@ -54,4 +55,8 @@ mavenPublishing {
     publishToMavenCentral(SonatypeHost.S01, true)
 
     signAllPublications()
+}
+
+tasks.withType<SourceJarTask> {
+    from(file("$rootDir/${projects.pigment.name}/samples/src/main/kotlin"))
 }
