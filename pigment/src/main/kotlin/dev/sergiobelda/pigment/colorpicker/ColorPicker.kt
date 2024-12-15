@@ -49,6 +49,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -178,14 +179,14 @@ internal inline fun ColorItem(
     size: ColorPickerSize,
     colorIndicatorColors: ColorIndicatorColors,
     colorIndicatorBorderWidth: ColorIndicatorBorderWidth,
-    modifier: Modifier = Modifier,
 ) {
-    val indicatorSize = size.indicatorSize()
     Box(
-        modifier = modifier
+        modifier = Modifier
             .padding(size.itemSpacing())
-            .clip(shape)
-            .requiredSize(indicatorSize)
+            .graphicsLayer {
+                this.shape = shape
+                clip = true
+            }
             .clickable(
                 enabled = colorItem.enabled,
                 indication = ripple(),
@@ -194,22 +195,33 @@ internal inline fun ColorItem(
                 onClick.invoke()
             },
     ) {
-        when {
-            colorItem.color != Color.Unspecified -> {
-                ColorIndicator(
-                    color = colorItem.color,
-                    selected = selected,
-                    shape = shape,
-                    indicatorSize = indicatorSize,
-                    colorIndicatorColors = colorIndicatorColors,
-                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
-                )
-            }
+        val indicatorSize = size.indicatorSize()
+        Box(
+            modifier = Modifier
+                .padding(ColorItemInnerPadding)
+                .graphicsLayer {
+                    this.shape = shape
+                    clip = true
+                }
+                .requiredSize(indicatorSize),
+        ) {
+            when {
+                colorItem.color != Color.Unspecified -> {
+                    ColorIndicator(
+                        color = colorItem.color,
+                        selected = selected,
+                        shape = shape,
+                        indicatorSize = indicatorSize,
+                        colorIndicatorColors = colorIndicatorColors,
+                        colorIndicatorBorderWidth = colorIndicatorBorderWidth,
+                    )
+                }
 
-            else -> {
-                ColorUnspecifiedIndicator(
-                    selected = selected,
-                )
+                else -> {
+                    ColorUnspecifiedIndicator(
+                        selected = selected,
+                    )
+                }
             }
         }
     }
@@ -400,7 +412,9 @@ private val ColorUnspecifiedIndicatorSelectedColor: Color = Color.Black
 
 private val ColorUnspecifiedIndicatorBackgroundColor: Color = Color.White
 
-private val ColorItemSpacing: Dp = 6.dp
+private val ColorItemSpacing: Dp = 4.dp
+
+private val ColorItemInnerPadding: Dp = 2.dp
 
 private val ColorPickerSizeSmall: Dp = 36.dp
 
