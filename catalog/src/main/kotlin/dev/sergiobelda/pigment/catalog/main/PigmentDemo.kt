@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 Sergio Belda
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.sergiobelda.pigment.catalog.main
 
 import androidx.compose.foundation.layout.Arrangement
@@ -55,7 +71,7 @@ internal fun PigmentDemo() {
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp)
+                    .padding(vertical = 12.dp),
             ) {
                 Button(
                     onClick = {
@@ -75,7 +91,7 @@ internal fun PigmentDemo() {
             }
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
                     /*.drawBehind {
                         selectedColor?.let {
                             drawRect(it)
@@ -87,7 +103,7 @@ internal fun PigmentDemo() {
         }
         if (dialogState.value) {
             ColorPickerDialog(
-                onDismissRequest = { dialogState.value = false }
+                onDismissRequest = { dialogState.value = false },
             )
         }
     }
@@ -108,7 +124,7 @@ internal fun ColorPickerDialog(
         text = {
             Box(
                 modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 ColorPickerFlowRowSample()
             }
@@ -126,19 +142,19 @@ internal fun ColorPickerBottomSheet() {
     Column(
         modifier = Modifier
             .navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
             text = stringResource(R.string.select_color),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
-                .padding(start = 16.dp)
+                .padding(start = 16.dp),
         )
         HorizontalDivider()
         Box(
             modifier = Modifier
                 .padding(horizontal = 12.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             ColorPickerFlowRowSample()
         }

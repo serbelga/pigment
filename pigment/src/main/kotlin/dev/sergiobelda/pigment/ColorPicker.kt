@@ -66,7 +66,7 @@ object ColorPicker {
     /**
      * @param overflow
      *
-     * @sample dev.sergiobelda.pigment.samples.ColorPickerFlowRowSample
+     * @sample dev.sergiobelda.pigment.samples.ColorPickerFlowRowSizeSample
      */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
@@ -88,14 +88,14 @@ object ColorPicker {
             modifier = modifier.semantics {
                 collectionInfo = CollectionInfo(
                     rowCount = maxLines,
-                    columnCount = colors.size.coerceAtMost(maxItemsInEachRow)
+                    columnCount = colors.size.coerceAtMost(maxItemsInEachRow),
                 )
             },
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = verticalArrangement,
             maxItemsInEachRow = maxItemsInEachRow,
             maxLines = maxLines,
-            overflow = overflow
+            overflow = overflow,
         ) {
             colors.forEach { colorItem ->
                 // TODO: Add Modifier.semantics { collectionItemInfo }
@@ -130,13 +130,13 @@ object ColorPicker {
             if (!reverseLayout) Arrangement.Start else Arrangement.End,
         verticalAlignment: Alignment.Vertical = Alignment.Top,
         flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
-        userScrollEnabled: Boolean = true
+        userScrollEnabled: Boolean = true,
     ) {
         LazyRow(
             modifier = modifier.semantics {
                 collectionInfo = CollectionInfo(
                     rowCount = 1,
-                    columnCount = colors.size
+                    columnCount = colors.size,
                 )
             },
             state = state,
@@ -149,7 +149,7 @@ object ColorPicker {
             items(
                 items = colors,
                 key = { colorItem -> colorItem.color?.toArgb() ?: 0 },
-                contentType = { colorItem -> colorItem.color?.toArgb() }
+                contentType = { colorItem -> colorItem.color?.toArgb() },
             ) { colorItem ->
                 // TODO: Add Modifier.semantics { collectionItemInfo }
                 ColorItem(
@@ -158,7 +158,7 @@ object ColorPicker {
                     onClick = { onColorSelected(colorItem.color) },
                     shape = shape,
                     size = size,
-                    colorIndicatorBorderWidth = colorIndicatorBorderWidth
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
                 )
             }
         }
@@ -174,7 +174,7 @@ internal inline fun ColorItem(
     shape: Shape,
     size: ColorPickerSize,
     colorIndicatorBorderWidth: ColorIndicatorBorderWidth,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val indicatorSize = size.indicatorSize()
     Box(
@@ -183,10 +183,10 @@ internal inline fun ColorItem(
             .clip(shape)
             .requiredSize(indicatorSize)
             .clickable(
-                enabled = colorItem.enabled
+                enabled = colorItem.enabled,
             ) {
                 onClick.invoke()
-            }
+            },
     ) {
         when {
             colorItem.color != null -> {
@@ -195,13 +195,13 @@ internal inline fun ColorItem(
                     selected = selected,
                     shape = shape,
                     indicatorSize = indicatorSize,
-                    colorIndicatorBorderWidth = colorIndicatorBorderWidth
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
                 )
             }
 
             else -> {
                 ColorNullIndicator(
-                    selected = selected
+                    selected = selected,
                 )
             }
         }
@@ -234,7 +234,7 @@ internal fun ColorIndicator(
             .fillMaxHeight()
             .drawBehind {
                 drawRect(TransparentContrastColor)
-            }
+            },
     )
     // Color indicator
     Box(
@@ -247,12 +247,12 @@ internal fun ColorIndicator(
                 width = borderWidth,
                 color = selectedColor,
                 shape = shape,
-            )
+            ),
     ) {
         if (selected) {
             Icon(
                 imageVector = ImageVector.vectorResource(
-                    R.drawable.ic_check_24px
+                    R.drawable.ic_check_24px,
                 ),
                 contentDescription = stringResource(R.string.selected),
                 tint = selectedColor,
@@ -265,7 +265,7 @@ internal fun ColorIndicator(
 // TODO: Remove BoxScope
 @Composable
 internal fun BoxScope.ColorNullIndicator(
-    selected: Boolean
+    selected: Boolean,
 ) {
     // TODO: Merge components and update null indicator selection UX.
     if (selected) {
@@ -279,7 +279,7 @@ internal fun BoxScope.ColorNullIndicator(
     // Color null indicator
     Icon(
         imageVector = ImageVector.vectorResource(
-            R.drawable.ic_format_color_reset_24px
+            R.drawable.ic_format_color_reset_24px,
         ),
         contentDescription = stringResource(R.string.color_off),
         modifier = Modifier.align(Alignment.Center),
@@ -290,7 +290,8 @@ internal fun BoxScope.ColorNullIndicator(
 enum class ColorPickerSize {
     Small,
     Medium,
-    Large;
+    Large,
+    ;
 
     internal fun indicatorSize(): Dp =
         when (this) {
@@ -303,7 +304,8 @@ enum class ColorPickerSize {
         when (this) {
             Small,
             Medium,
-            Large -> ColorItemSpacing
+            Large,
+            -> ColorItemSpacing
         }
 }
 
@@ -328,7 +330,7 @@ object ColorPickerDefaults {
         ColorIndicatorBorderWidth(
             neutralBorderWidth = neutralBorderWidth,
             selectedBorderWidth = selectedBorderWidth,
-            unselectedBorderWidth = unselectedBorderWidth
+            unselectedBorderWidth = unselectedBorderWidth,
         )
 
     private val NeutralBorderWidth: Dp = 1.dp

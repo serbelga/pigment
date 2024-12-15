@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment
+package dev.sergiobelda.pigment.samples
 
-import androidx.compose.runtime.Immutable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import dev.sergiobelda.pigment.ColorPickerSize
 
-/**
- */
-@Immutable
-data class ColorItem(
-    val color: Color?,
-    val enabled: Boolean = true,
-)
+internal class ColorPickerSizeProvider : PreviewParameterProvider<ColorPickerSize> {
+    override val values: Sequence<ColorPickerSize>
+        get() = ColorPickerSize.entries.asSequence()
+}
