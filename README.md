@@ -19,14 +19,14 @@ dependencies {
 ```kotlin
 val colorPickerItems = remember {
     listOf(
-        ColorPickerItem(color = null),
+        ColorPickerItem(color = Color.Unspecified),
         ColorPickerItem(color = Color.Black),
         ColorPickerItem(color = Color(0x80FF4444)),
         ColorPickerItem(color = Color(0xFFEF5350), enabled = false),
     ).toMutableStateList()
 }
 val (selectedColor, onColorSelected) = remember {
-    mutableStateOf(colorPickerItems.firstOrNull()?.color)
+    mutableStateOf(Color.Unspecified)
 }
 ColorPicker.FlowRow(
     colors = colorPickerItems,
@@ -42,14 +42,14 @@ ColorPicker.FlowRow(
 ```kotlin
 val colorPickerItems = remember {
     listOf(
-        ColorPickerItem(color = null),
+        ColorPickerItem(color = Color.Unspecified),
         ColorPickerItem(color = Color.Black),
         ColorPickerItem(color = Color(0x80FF4444)),
         ColorPickerItem(color = Color(0xFFEF5350), enabled = false),
     ).toMutableStateList()
 }
 val (selectedColor, onColorSelected) = remember {
-    mutableStateOf(colorPickerItems.firstOrNull()?.color)
+    mutableStateOf(Color.Unspecified)
 }
 ColorPicker.LazyRow(
     colors = colorPickerItems,
