@@ -65,7 +65,7 @@ import dev.sergiobelda.pigment.R
 object ColorPicker {
 
     /**
-     * @sample dev.sergiobelda.pigment.samples.ColorPickerFlowRowSample
+     * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
      */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
@@ -113,7 +113,7 @@ object ColorPicker {
     }
 
     /**
-     * @sample dev.sergiobelda.pigment.samples.ColorPickerLazyRowSample
+     * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
      */
     @Composable
     fun LazyRow(

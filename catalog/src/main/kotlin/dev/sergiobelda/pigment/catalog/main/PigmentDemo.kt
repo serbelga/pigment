@@ -19,6 +19,7 @@ package dev.sergiobelda.pigment.catalog.main
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,13 +40,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.catalog.R
-import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
-import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
+import dev.sergiobelda.pigment.colorpicker.ColorPicker
+import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
+import dev.sergiobelda.pigment.samples.colorpicker.colorPickerItems
 import kotlinx.coroutines.launch
 
 @Composable
@@ -55,9 +60,18 @@ internal fun PigmentDemo() {
     val coroutineScope = rememberCoroutineScope()
     val dialogState = remember { mutableStateOf(false) }
 
+    val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
+    val (selectedColor, onColorSelected) = remember {
+        mutableStateOf(colorPickerItems.firstOrNull()?.color)
+    }
+
     BottomSheetScaffold(
         sheetContent = {
-            ColorPickerBottomSheet()
+            ColorPickerBottomSheet(
+                colors = colorPickerItems,
+                selectedColor = selectedColor,
+                onColorSelected = onColorSelected,
+            )
         },
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp,
@@ -91,26 +105,37 @@ internal fun PigmentDemo() {
             }
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                    /*.drawBehind {
+                    .fillMaxSize()
+                    .drawBehind {
                         selectedColor?.let {
                             drawRect(it)
                         }
-                    }*/
+                    },
             ) {
-                ColorPickerLazyRowSample()
+                ColorPicker.LazyRow(
+                    colors = colorPickerItems,
+                    selectedColor = selectedColor,
+                    onColorSelected = onColorSelected,
+                )
             }
         }
         if (dialogState.value) {
             ColorPickerDialog(
+                colors = colorPickerItems,
+                selectedColor = selectedColor,
+                onColorSelected = onColorSelected,
                 onDismissRequest = { dialogState.value = false },
             )
         }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun ColorPickerDialog(
+    colors: List<ColorPickerItem>,
+    selectedColor: Color?,
+    onColorSelected: (color: Color?) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     AlertDialog(
@@ -126,7 +151,11 @@ internal fun ColorPickerDialog(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
-                ColorPickerFlowRowSample()
+                ColorPicker.FlowRow(
+                    colors = colors,
+                    selectedColor = selectedColor,
+                    onColorSelected = onColorSelected,
+                )
             }
         },
         confirmButton = {
@@ -137,8 +166,13 @@ internal fun ColorPickerDialog(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun ColorPickerBottomSheet() {
+internal fun ColorPickerBottomSheet(
+    colors: List<ColorPickerItem>,
+    selectedColor: Color?,
+    onColorSelected: (color: Color?) -> Unit,
+) {
     Column(
         modifier = Modifier
             .navigationBarsPadding(),
@@ -156,7 +190,11 @@ internal fun ColorPickerBottomSheet() {
                 .padding(horizontal = 12.dp),
             contentAlignment = Alignment.Center,
         ) {
-            ColorPickerFlowRowSample()
+            ColorPicker.FlowRow(
+                colors = colors,
+                selectedColor = selectedColor,
+                onColorSelected = onColorSelected,
+            )
         }
     }
 }

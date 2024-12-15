@@ -43,7 +43,7 @@ internal val colors = listOf(
     Color(0xFFFF7043),
 )
 
-internal val colorPickerItems = colors.map {
+val colorPickerItems = colors.map {
     ColorPickerItem(
         color = it,
         enabled = true,
