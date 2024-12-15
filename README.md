@@ -12,7 +12,9 @@ dependencies {
 
 ## Usage
 
-### FlowRow
+### ColorPicker.FlowRow
+
+<img src="./screenshots/ColorPicker_FlowRow.png" width="240" />
 
 ```kotlin
 val colorPickerItems = remember {
@@ -33,7 +35,9 @@ ColorPicker.FlowRow(
 )
 ```
 
-### LazyRow
+### ColorPicker.LazyRow
+
+<img src="./screenshots/ColorPicker_LazyRow.png" width="240" />
 
 ```kotlin
 val colorPickerItems = remember {
@@ -51,65 +55,6 @@ ColorPicker.LazyRow(
     colors = colorPickerItems,
     selectedColor = selectedColor,
     onColorSelected = onColorSelected,
-)
-```
-
-## Screenshots
-
-### BottomSheet
-
-<img src="./screenshots/sheet.png" width=240 />
-
-```kotlin
-BottomSheetScaffold(
-    sheetContent = {
-        Column {
-            Text(
-                "Select color",
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.padding(12.dp)
-            )
-            Divider(thickness = 1.dp, color = MaterialTheme.colors.onPrimary)
-            ColorPicker(
-                colors,
-                selectedColor,
-                onColorSelected,
-                modifier = Modifier.padding(12.dp)
-            )
-        }
-    },
-    scaffoldState = scaffoldState,
-    sheetPeekHeight = 0.dp
-) {
-    ...
-}
-```
-
-### Dialog
-
-<img src="./screenshots/dialog.png" width=240 />
-
-```kotlin
-AlertDialog(
-    onDismissRequest = { dialogState.value = false },
-    title = {
-        Text(
-            "Select color",
-            style = MaterialTheme.typography.body1
-        )
-    },
-    text = {
-        ColorPicker(
-            colors,
-            selectedColor,
-            onColorSelected
-        )
-    },
-    confirmButton = {
-        Button(onClick = { dialogState.value = false }) {
-            Text("OK")
-        }
-    }
 )
 ```
 
