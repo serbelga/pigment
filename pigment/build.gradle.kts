@@ -6,6 +6,7 @@ plugins {
     id("dev.sergiobelda.pigment-spotless")
     alias(libs.plugins.vanniktechMavenPublish)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.paparazzi)
 }
 
 group = "dev.sergiobelda.pigment"
@@ -40,11 +41,13 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
     implementation(platform(libs.androidx.compose.composeBom))
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.materialIconsCore)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
+
+    testImplementation(libs.google.testParameterInjector)
 }
 
 mavenPublishing {

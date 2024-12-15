@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment
+package dev.sergiobelda.pigment.colorpicker
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
-/**
- */
-@Immutable
-data class ColorItem(
-    val color: Color?,
-    val enabled: Boolean = true,
-)
+enum class ColorTestCase(val value: Color? = null) {
+    Null,
+    White(Color.White),
+    Black(Color.Black),
+    LightColor(Color(0xFFFFEE58)),
+    DarkColor(Color(0xFFEC407A)),
+}

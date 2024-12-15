@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.samples
+package dev.sergiobelda.pigment.sample
 
 import androidx.compose.ui.graphics.Color
-import dev.sergiobelda.pigment.ColorItem
+import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
 
 internal val colors = listOf(
     null,
-    Color(0xFF000000),
-    Color(0xFFFFFFFF),
+    Color.Black,
+    Color.White,
     Color(0xFFFAFAFA),
     Color(0x80FF4444),
     Color(0xFFEF5350),
@@ -43,8 +43,8 @@ internal val colors = listOf(
     Color(0xFFFF7043),
 )
 
-internal val colorItems = colors.map {
-    ColorItem(
+internal val colorPickerItems = colors.map {
+    ColorPickerItem(
         color = it,
         enabled = true,
     )
