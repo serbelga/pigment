@@ -2,7 +2,7 @@
 activityCompose = "1.9.3"
 androidGradlePlugin = "8.7.3"
 appcompat = "1.7.0"
-composeBom = "2024.11.00"
+composeBom = "2024.12.01"
 coreKtx = "1.15.0"
 kotlin = "2.1.0"
 kotlinCollectionsImmutable = "0.3.8"
