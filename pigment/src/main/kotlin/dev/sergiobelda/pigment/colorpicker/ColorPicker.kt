@@ -168,7 +168,6 @@ object ColorPicker {
     }
 }
 
-// TODO: Add sizes
 @Composable
 internal inline fun ColorItem(
     colorItem: ColorPickerItem,

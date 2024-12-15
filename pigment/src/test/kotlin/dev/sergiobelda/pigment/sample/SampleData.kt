@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.samples.colorpicker
+package dev.sergiobelda.pigment.sample
 
 import androidx.compose.ui.graphics.Color
 import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
