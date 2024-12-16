@@ -3,6 +3,7 @@ activityCompose = "1.9.3"
 androidGradlePlugin = "8.7.3"
 appcompat = "1.7.0"
 composeBom = "2024.12.01"
+composeMultiplatform = "1.7.1"
 coreKtx = "1.15.0"
 kotlin = "2.1.0"
 kotlinCollectionsImmutable = "0.3.8"
@@ -22,13 +23,13 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 
-androidx-compose-composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
-androidx-compose-ui = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-compose-uiGraphics = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
-androidx-compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
+#androidx-compose-composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+#androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
+#androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+#androidx-compose-ui = { module = "androidx.compose.ui:ui-tooling-preview" }
+#androidx-compose-uiGraphics = { module = "androidx.compose.ui:ui-tooling-preview" }
+#androidx-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
+#androidx-compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
 
 androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 
@@ -45,7 +46,9 @@ spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 vanniktechMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublishPlugin" }

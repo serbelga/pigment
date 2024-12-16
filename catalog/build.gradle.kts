@@ -1,8 +1,9 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("dev.sergiobelda.pigment-spotless")
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
+    id("dev.sergiobelda.pigment-spotless")
+    kotlin("android")
 }
 
 android {
@@ -45,10 +46,9 @@ dependencies {
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycle.runtimeKtx)
 
-    implementation(platform(libs.androidx.compose.composeBom))
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.uiTooling)
+    implementation(compose.material3)
+    implementation(compose.ui)
+    implementation(compose.uiTooling)
 
     implementation(libs.kotlin.collections.immutable)
 }
