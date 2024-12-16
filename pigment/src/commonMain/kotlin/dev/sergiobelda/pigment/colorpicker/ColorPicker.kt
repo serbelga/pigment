@@ -16,6 +16,7 @@
 
 package dev.sergiobelda.pigment.colorpicker
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
@@ -45,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
@@ -54,7 +56,13 @@ import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.sergiobelda.pigment.pigment.generated.resources.Res
+import dev.sergiobelda.pigment.pigment.generated.resources.color_off
+import dev.sergiobelda.pigment.pigment.generated.resources.ic_check_24px
+import dev.sergiobelda.pigment.pigment.generated.resources.ic_format_color_reset_24px
 import dev.sergiobelda.pigment.pigment.generated.resources.selected
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 
 /**
  */
@@ -257,15 +265,14 @@ internal fun ColorIndicator(
             ),
     ) {
         if (selected) {
-            // TODO: Uncomment this code
-//            Image(
-//                imageVector = vectorResource(
-//                    Res.drawable.ic_check_24px,
-//                ),
-//                contentDescription = stringResource(Res.string.selected),
-//                colorFilter = ColorFilter.tint(selectedColor),
-//                modifier = Modifier.align(Alignment.Center),
-//            )
+            Image(
+                imageVector = vectorResource(
+                    Res.drawable.ic_check_24px,
+                ),
+                contentDescription = stringResource(Res.string.selected),
+                colorFilter = ColorFilter.tint(selectedColor),
+                modifier = Modifier.align(Alignment.Center),
+            )
         }
     }
 }
@@ -281,30 +288,28 @@ internal fun ColorUnspecifiedIndicator(
                 drawRect(ColorUnspecifiedIndicatorBackgroundColor)
             },
     ) {
-        // TODO: Uncomment this code
-//        Image(
-//            imageVector = vectorResource(
-//                Res.drawable.ic_format_color_reset_24px,
-//            ),
-//            contentDescription = stringResource(Res.string.color_off),
-//            modifier = Modifier
-//                .align(Alignment.Center),
-//            colorFilter = ColorFilter.tint(
-//                color = if (selected) {
-//                    ColorUnspecifiedIndicatorIconSelectedColor
-//                } else {
-//                    ColorUnspecifiedIndicatorIconUnselectedColor
-//                },
-//            ),
-//        )
+        Image(
+            imageVector = vectorResource(
+                Res.drawable.ic_format_color_reset_24px,
+            ),
+            contentDescription = stringResource(Res.string.color_off),
+            modifier = Modifier
+                .align(Alignment.Center),
+            colorFilter = ColorFilter.tint(
+                color = if (selected) {
+                    ColorUnspecifiedIndicatorIconSelectedColor
+                } else {
+                    ColorUnspecifiedIndicatorIconUnselectedColor
+                },
+            ),
+        )
         if (selected) {
-            // TODO: Uncomment this code
-//            Image(
-//                imageVector = vectorResource(Res.drawable.ic_check_24px),
-//                contentDescription = stringResource(Res.string.selected),
-//                modifier = Modifier.align(Alignment.Center),
-//                colorFilter = ColorFilter.tint(ColorUnspecifiedIndicatorSelectedColor),
-//            )
+            Image(
+                imageVector = vectorResource(Res.drawable.ic_check_24px),
+                contentDescription = stringResource(Res.string.selected),
+                modifier = Modifier.align(Alignment.Center),
+                colorFilter = ColorFilter.tint(ColorUnspecifiedIndicatorSelectedColor),
+            )
         }
     }
 }
