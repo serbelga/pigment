@@ -16,6 +16,10 @@
 
 package dev.sergiobelda.pigment.colorpicker
 
+// Disabled for now until
+// https://youtrack.jetbrains.com/issue/CMP-7276/IllegalStateException-using-Compose-Components-Resources-and-Paparazzi
+// is resolved.
+/*
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.ui.graphics.Color
 import app.cash.paparazzi.DeviceConfig
@@ -81,3 +85,4 @@ class ColorPickerTest {
         }
     }
 }
+*/
