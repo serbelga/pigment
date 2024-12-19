@@ -48,7 +48,6 @@ dependencies {
 
     implementation(compose.material3)
     implementation(compose.ui)
-    implementation(compose.uiTooling)
 
     implementation(libs.kotlin.collections.immutable)
 }
