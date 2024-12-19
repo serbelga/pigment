@@ -44,7 +44,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -52,15 +51,18 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.sergiobelda.pigment.R
+import dev.sergiobelda.pigment.pigment.generated.resources.Res
+import dev.sergiobelda.pigment.pigment.generated.resources.color_off
+import dev.sergiobelda.pigment.pigment.generated.resources.ic_check_24px
+import dev.sergiobelda.pigment.pigment.generated.resources.ic_format_color_reset_24px
+import dev.sergiobelda.pigment.pigment.generated.resources.selected
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 
 /**
  */
@@ -264,10 +266,10 @@ internal fun ColorIndicator(
     ) {
         if (selected) {
             Image(
-                imageVector = ImageVector.vectorResource(
-                    R.drawable.ic_check_24px,
+                imageVector = vectorResource(
+                    Res.drawable.ic_check_24px,
                 ),
-                contentDescription = stringResource(R.string.selected),
+                contentDescription = stringResource(Res.string.selected),
                 colorFilter = ColorFilter.tint(selectedColor),
                 modifier = Modifier.align(Alignment.Center),
             )
@@ -287,10 +289,10 @@ internal fun ColorUnspecifiedIndicator(
             },
     ) {
         Image(
-            imageVector = ImageVector.vectorResource(
-                R.drawable.ic_format_color_reset_24px,
+            imageVector = vectorResource(
+                Res.drawable.ic_format_color_reset_24px,
             ),
-            contentDescription = stringResource(R.string.color_off),
+            contentDescription = stringResource(Res.string.color_off),
             modifier = Modifier
                 .align(Alignment.Center),
             colorFilter = ColorFilter.tint(
@@ -303,10 +305,8 @@ internal fun ColorUnspecifiedIndicator(
         )
         if (selected) {
             Image(
-                imageVector = ImageVector.vectorResource(
-                    R.drawable.ic_check_24px,
-                ),
-                contentDescription = stringResource(R.string.selected),
+                imageVector = vectorResource(Res.drawable.ic_check_24px),
+                contentDescription = stringResource(Res.string.selected),
                 modifier = Modifier.align(Alignment.Center),
                 colorFilter = ColorFilter.tint(ColorUnspecifiedIndicatorSelectedColor),
             )
