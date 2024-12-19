@@ -16,6 +16,10 @@ version = libs.versions.pigment.get()
 
 kotlin {
     androidTarget()
+    jvm()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -23,7 +27,6 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.uiTooling)
             }
         }
         val androidMain by getting {
@@ -36,6 +39,13 @@ kotlin {
                 implementation(libs.google.testParameterInjector)
             }
         }
+        val jvmMain by getting
+        val jvmTest by getting
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating
+        val iosTest by creating
     }
 }
 
