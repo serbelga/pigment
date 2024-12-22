@@ -26,7 +26,7 @@ fun main() {
         resourcePathMapping { path -> "./$path" }
     }
     onWasmReady {
-        CanvasBasedWindow {
+        CanvasBasedWindow("Pigment Catalog Sample") {
             PigmentCatalogScreen()
         }
     }
