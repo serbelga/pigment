@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+package dev.sergiobelda.pigment.catalog.main
+
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
 import dev.sergiobelda.pigment.catalog.PigmentCatalogScreen

@@ -25,7 +25,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "sample_app"
+            baseName = "catalog"
             isStatic = true
         }
     }
@@ -59,6 +59,10 @@ kotlin {
                 implementation(compose.desktop.currentOs)
             }
         }
+
+        all {
+            languageSettings.optIn("kotlin.RequiresOptIn")
+        }
     }
 }
 
@@ -91,7 +95,7 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "dev.sergiobelda.pigment.catalog.Main_desktopKt"
+        mainClass = "dev.sergiobelda.pigment.catalog.Main_jvmKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
