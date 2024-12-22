@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.catalog.ui
+package dev.sergiobelda.pigment.catalog
 
-import androidx.compose.material3.Typography
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import dev.sergiobelda.pigment.catalog.R
+import androidx.compose.runtime.Composable
+import dev.sergiobelda.pigment.catalog.main.PigmentDemo
+import dev.sergiobelda.pigment.catalog.ui.PigmentCatalogTheme
 
-val workSansMedium = Font(R.font.work_sans_medium, weight = FontWeight.Medium)
-
-val workSansFontFamily = FontFamily(listOf(workSansMedium))
-
-val typography = Typography()
+@Composable
+fun PigmentCatalogScreen() {
+    PigmentCatalogTheme {
+        PigmentDemo()
+    }
+}

@@ -56,11 +56,11 @@ import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.sergiobelda.pigment.pigment.generated.resources.Res
-import dev.sergiobelda.pigment.pigment.generated.resources.color_off
-import dev.sergiobelda.pigment.pigment.generated.resources.ic_check_24px
-import dev.sergiobelda.pigment.pigment.generated.resources.ic_format_color_reset_24px
-import dev.sergiobelda.pigment.pigment.generated.resources.selected
+import dev.sergiobelda.pigment.resources.Res
+import dev.sergiobelda.pigment.resources.color_off
+import dev.sergiobelda.pigment.resources.ic_check_24px
+import dev.sergiobelda.pigment.resources.ic_format_color_reset_24px
+import dev.sergiobelda.pigment.resources.selected
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 

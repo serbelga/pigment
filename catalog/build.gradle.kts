@@ -1,12 +1,70 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
+    kotlin("multiplatform")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
     id("dev.sergiobelda.pigment-spotless")
-    kotlin("android")
+}
+
+group = "dev.sergiobelda.pigment.catalog"
+
+kotlin {
+    androidTarget()
+    jvm {
+        compilations.all {
+            kotlin {
+                jvmToolchain(17)
+            }
+        }
+    }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "sample_app"
+            isStatic = true
+        }
+    }
+    js {
+        browser()
+        binaries.executable()
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.pigment)
+
+                implementation(compose.components.resources)
+                implementation(compose.material3)
+                implementation(compose.ui)
+
+                implementation(libs.kotlin.collections.immutable)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.coreKtx)
+                implementation(libs.androidx.lifecycle.runtimeKtx)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
+    }
 }
 
 android {
+    namespace = "dev.sergiobelda.pigment.catalog"
+
     compileSdk = 35
 
     defaultConfig {
@@ -19,35 +77,27 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     kotlin {
         jvmToolchain(17)
     }
     buildFeatures {
         compose = true
     }
-    namespace = "dev.sergiobelda.pigment.catalog"
 }
 
 dependencies {
-    implementation(projects.pigment)
     implementation(projects.pigment.samples)
-    
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.lifecycle.runtimeKtx)
+}
 
-    implementation(compose.material3)
-    implementation(compose.ui)
+compose.desktop {
+    application {
+        mainClass = "dev.sergiobelda.pigment.catalog.Main_desktopKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        }
+    }
+}
 
-    implementation(libs.kotlin.collections.immutable)
+compose.resources {
+    packageOfResClass = "dev.sergiobelda.pigment.catalog"
 }

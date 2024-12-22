@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.catalog.main
+package dev.sergiobelda.pigment.catalog
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import dev.sergiobelda.pigment.catalog.ui.PigmentCatalogTheme
+import androidx.compose.ui.window.ComposeUIViewController
+import platform.UIKit.UIViewController
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
-        setContent {
-            PigmentCatalogTheme {
-                PigmentDemo()
-            }
-        }
-    }
+fun MainViewController(): UIViewController = ComposeUIViewController {
+    PigmentCatalogScreen()
 }

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.catalog.ui
+package dev.sergiobelda.pigment.catalog
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 
-val purple200 = Color(0xFFBB86FC)
-val purple500 = Color(0xFF6200EE)
-val purple700 = Color(0xFF3700B3)
-val teal200 = Color(0xFF03DAC5)
+fun main() = application {
+    Window(
+        resizable = false,
+        onCloseRequest = ::exitApplication,
+        title = "Pigment Demo Sample",
+    ) {
+        PigmentCatalogScreen()
+    }
+}

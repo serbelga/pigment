@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.catalog.ui
+package dev.sergiobelda.pigment.catalog.main
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Shapes
-import androidx.compose.ui.unit.dp
+import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import dev.sergiobelda.pigment.catalog.PigmentCatalogScreen
 
-val shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp),
-)
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        setContent {
+            PigmentCatalogScreen()
+        }
+    }
+}

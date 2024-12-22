@@ -45,13 +45,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.sergiobelda.pigment.catalog.R
+import dev.sergiobelda.pigment.catalog.Res
+import dev.sergiobelda.pigment.catalog.ok
+import dev.sergiobelda.pigment.catalog.open_bottomsheet
+import dev.sergiobelda.pigment.catalog.open_dialog
+import dev.sergiobelda.pigment.catalog.select_color
 import dev.sergiobelda.pigment.colorpicker.ColorPicker
 import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
-import dev.sergiobelda.pigment.samples.colorpicker.colorPickerItems
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,13 +97,13 @@ internal fun PigmentDemo() {
                         }
                     },
                 ) {
-                    Text(stringResource(R.string.open_bottomsheet))
+                    Text(stringResource(Res.string.open_bottomsheet))
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(
                     onClick = { dialogState.value = true },
                 ) {
-                    Text(stringResource(R.string.open_dialog))
+                    Text(stringResource(Res.string.open_dialog))
                 }
             }
             Box(
@@ -140,7 +143,7 @@ internal fun ColorPickerDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
-                text = stringResource(R.string.select_color),
+                text = stringResource(Res.string.select_color),
                 style = MaterialTheme.typography.bodySmall,
             )
         },
@@ -158,7 +161,7 @@ internal fun ColorPickerDialog(
         },
         confirmButton = {
             Button(onClick = onDismissRequest) {
-                Text(stringResource(R.string.ok))
+                Text(stringResource(Res.string.ok))
             }
         },
     )
@@ -177,7 +180,7 @@ internal fun ColorPickerBottomSheet(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
-            text = stringResource(R.string.select_color),
+            text = stringResource(Res.string.select_color),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .padding(start = 16.dp),

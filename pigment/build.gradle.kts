@@ -20,6 +20,10 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+    js {
+        browser()
+        binaries.executable()
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -39,6 +43,8 @@ kotlin {
                 implementation(libs.google.testParameterInjector)
             }
         }
+        val jsMain by getting
+        val jsTest by getting
         val jvmMain by getting
         val jvmTest by getting
         val iosX64Main by getting
@@ -83,4 +89,8 @@ mavenPublishing {
 
 tasks.withType<SourceJarTask> {
     from(file("$rootDir/${projects.pigment.name}/samples/src/main/kotlin"))
+}
+
+compose.resources {
+    packageOfResClass = "dev.sergiobelda.pigment.resources"
 }
