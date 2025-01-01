@@ -26,12 +26,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowOverflow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -56,6 +58,7 @@ import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.sergiobelda.pigment.colorpicker.ColorPicker.FlowRow
 import dev.sergiobelda.pigment.resources.Res
 import dev.sergiobelda.pigment.resources.color_off
 import dev.sergiobelda.pigment.resources.ic_check_24px
@@ -65,11 +68,30 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
 /**
+ * A tool that allow user select a color item.
  */
 object ColorPicker {
 
     /**
+     * A ColorPicker that follows the [FlowRow] layout that receives a list of [ColorPickerItem].
+     *
+     * @param colors The list of [ColorPickerItem] to be displayed.
+     * @param selectedColor The selected [Color].
+     * @param onColorSelected Launched when a color item has been selected.
+     * @param modifier The modifier to be applied to the Row.
+     * @param shape Shape of the color items.
+     * @param size The [ColorPickerSize].
+     * @param colorIndicatorColors The colors to be applied on the selected indicator for a Color item.
+     * @param colorIndicatorBorderWidth The border width to be applied on the selected indicator for a Color item.
+     * @param horizontalArrangement The horizontal arrangement of the layout's children.
+     * @param verticalArrangement The vertical arrangement of the layout's virtual rows.
+     * @param maxItemsInEachRow The maximum number of items per row.
+     * @param maxLines The max number of rows.
+     * @param overflow The strategy to handle overflowing items.
+     *
      * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
+     *
+     * @see FlowRow
      */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
@@ -88,13 +110,9 @@ object ColorPicker {
         maxLines: Int = Int.MAX_VALUE,
         overflow: FlowRowOverflow = FlowRowOverflow.Clip,
     ) {
-        FlowRow(
-            modifier = modifier.semantics {
-                collectionInfo = CollectionInfo(
-                    rowCount = maxLines,
-                    columnCount = colors.size.coerceAtMost(maxItemsInEachRow),
-                )
-            },
+        ColorPickerFlowRow(
+            itemsCount = colors.size,
+            modifier = modifier,
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = verticalArrangement,
             maxItemsInEachRow = maxItemsInEachRow,
@@ -117,7 +135,100 @@ object ColorPicker {
     }
 
     /**
+     * A ColorPicker that follows the [FlowRow] layout that receives a map of a key which
+     * value is a [ColorPickerItem]. This component is useful when we need to relate a custom object
+     * that needs to be selected with a [ColorPickerItem].
+     *
+     * @param colorsMap A map of [Any] and its [ColorPickerItem] value.
+     * @param selectedItem The selected item.
+     * @param onItemSelected Launched when an item has been selected.
+     * @param modifier The modifier to be applied to the Row.
+     * @param shape Shape of the color items.
+     * @param size The [ColorPickerSize].
+     * @param colorIndicatorColors The colors to be applied on the selected indicator for a Color item.
+     * @param colorIndicatorBorderWidth The border width to be applied on the selected indicator for a Color item.
+     * @param horizontalArrangement The horizontal arrangement of the layout's children.
+     * @param verticalArrangement The vertical arrangement of the layout's virtual rows.
+     * @param maxItemsInEachRow The maximum number of items per row.
+     * @param maxLines The max number of rows.
+     * @param overflow The strategy to handle overflowing items.
+     *
+     * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowMapSample
+     *
+     * @see FlowRow
+     */
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    fun <T : Any> FlowRow(
+        colorsMap: Map<T, ColorPickerItem>,
+        selectedItem: T,
+        onItemSelected: (item: T) -> Unit,
+        modifier: Modifier = Modifier,
+        shape: Shape = ColorPickerDefaults.Shape,
+        size: ColorPickerSize = ColorPickerDefaults.Size,
+        colorIndicatorColors: ColorIndicatorColors = ColorPickerDefaults.colorIndicatorColors(),
+        colorIndicatorBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+        verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+        maxItemsInEachRow: Int = Int.MAX_VALUE,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: FlowRowOverflow = FlowRowOverflow.Clip,
+    ) {
+        ColorPickerFlowRow(
+            itemsCount = colorsMap.size,
+            modifier = modifier,
+            horizontalArrangement = horizontalArrangement,
+            verticalArrangement = verticalArrangement,
+            maxItemsInEachRow = maxItemsInEachRow,
+            maxLines = maxLines,
+            overflow = overflow,
+        ) {
+            colorsMap.forEach { pair ->
+                // TODO: Add Modifier.semantics { collectionItemInfo }
+                ColorItem(
+                    colorItem = pair.value,
+                    selected = pair.key == selectedItem,
+                    onClick = { onItemSelected(pair.key) },
+                    shape = shape,
+                    size = size,
+                    colorIndicatorColors = colorIndicatorColors,
+                    colorIndicatorBorderWidth = colorIndicatorBorderWidth,
+                )
+            }
+        }
+    }
+
+    /**
+     * A ColorPicker that follows the [LazyRow] layout that receives a list of [ColorPickerItem].
+     *
+     * @param colors The list of [ColorPickerItem] to be displayed.
+     * @param selectedColor The selected [Color].
+     * @param onColorSelected Launched when a color item has been selected.
+     * @param modifier the modifier to apply to this layout
+     * @param shape Shape of the color items.
+     * @param size The [ColorPickerSize].
+     * @param colorIndicatorColors The colors to be applied on the selected indicator for a Color item.
+     * @param colorIndicatorBorderWidth The border width to be applied on the selected indicator for a Color item.
+     * @param state the state object to be used to control or observe the list's state
+     * @param contentPadding a padding around the whole content. This will add padding for the
+     * content after it has been clipped, which is not possible via [modifier] param. You can use it
+     * to add a padding before the first item or after the last one. If you want to add a spacing
+     * between each item use [horizontalArrangement].
+     * @param reverseLayout reverse the direction of scrolling and layout. When `true`, items are
+     * laid out in the reverse order and [LazyListState.firstVisibleItemIndex] == 0 means
+     * that row is scrolled to the end. Note that [reverseLayout] does not change the behavior of
+     * [horizontalArrangement], e.g. with [Arrangement.Start] [123###] becomes [321###].
+     * @param horizontalArrangement The horizontal arrangement of the layout's children. This allows
+     * to add a spacing between items and specify the arrangement of the items when we have not enough
+     * of them to fill the whole minimum size.
+     * @param verticalAlignment the vertical alignment applied to the items
+     * @param flingBehavior logic describing fling behavior.
+     * @param userScrollEnabled whether the scrolling via the user gestures or accessibility actions
+     * is allowed. You can still scroll programmatically using the state even when it is disabled.
+     *
      * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
+     *
+     * @see LazyRow
      */
     @Composable
     fun LazyRow(
@@ -138,15 +249,12 @@ object ColorPicker {
         flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
         userScrollEnabled: Boolean = true,
     ) {
-        LazyRow(
-            modifier = modifier.semantics {
-                collectionInfo = CollectionInfo(
-                    rowCount = 1,
-                    columnCount = colors.size,
-                )
-            },
+        ColorPickerLazyRow(
+            itemsCount = colors.size,
+            modifier = modifier,
             state = state,
             contentPadding = contentPadding,
+            reverseLayout = reverseLayout,
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment,
             flingBehavior = flingBehavior,
@@ -170,7 +278,146 @@ object ColorPicker {
             }
         }
     }
+
+    /**
+     * A ColorPicker that follows the [LazyRow] layout that receives a map of a key which
+     * value is a [ColorPickerItem]. This component is useful when we need to relate a custom object
+     * that needs to be selected with a [ColorPickerItem].
+     *
+     * @param colorsMap A map of [Any] and its [ColorPickerItem] value.
+     * @param selectedItem The selected item.
+     * @param onItemSelected Launched when an item has been selected.
+     * @param modifier the modifier to apply to this layout
+     * @param shape Shape of the color items.
+     * @param size The [ColorPickerSize].
+     * @param colorIndicatorColors The colors to be applied on the selected indicator for a Color item.
+     * @param colorIndicatorBorderWidth The border width to be applied on the selected indicator for a Color item.
+     * @param state the state object to be used to control or observe the list's state
+     * @param contentPadding a padding around the whole content. This will add padding for the
+     * content after it has been clipped, which is not possible via [modifier] param. You can use it
+     * to add a padding before the first item or after the last one. If you want to add a spacing
+     * between each item use [horizontalArrangement].
+     * @param reverseLayout reverse the direction of scrolling and layout. When `true`, items are
+     * laid out in the reverse order and [LazyListState.firstVisibleItemIndex] == 0 means
+     * that row is scrolled to the end. Note that [reverseLayout] does not change the behavior of
+     * [horizontalArrangement], e.g. with [Arrangement.Start] [123###] becomes [321###].
+     * @param horizontalArrangement The horizontal arrangement of the layout's children. This allows
+     * to add a spacing between items and specify the arrangement of the items when we have not enough
+     * of them to fill the whole minimum size.
+     * @param verticalAlignment the vertical alignment applied to the items
+     * @param flingBehavior logic describing fling behavior.
+     * @param userScrollEnabled whether the scrolling via the user gestures or accessibility actions
+     * is allowed. You can still scroll programmatically using the state even when it is disabled.
+     *
+     * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowMapSample
+     *
+     * @see LazyRow
+     */
+    @Composable
+    fun <T : Any> LazyRow(
+        colorsMap: Map<T, ColorPickerItem>,
+        selectedItem: T,
+        onItemSelected: (item: T) -> Unit,
+        modifier: Modifier = Modifier,
+        shape: Shape = ColorPickerDefaults.Shape,
+        size: ColorPickerSize = ColorPickerDefaults.Size,
+        colorIndicatorColors: ColorIndicatorColors = ColorPickerDefaults.colorIndicatorColors(),
+        colorIndicatorBorderWidth: ColorIndicatorBorderWidth = ColorPickerDefaults.colorIndicatorBorderWidth(),
+        state: LazyListState = rememberLazyListState(),
+        contentPadding: PaddingValues = PaddingValues(0.dp),
+        reverseLayout: Boolean = false,
+        horizontalArrangement: Arrangement.Horizontal =
+            if (!reverseLayout) Arrangement.Start else Arrangement.End,
+        verticalAlignment: Alignment.Vertical = Alignment.Top,
+        flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+        userScrollEnabled: Boolean = true,
+    ) {
+        ColorPickerLazyRow(
+            itemsCount = colorsMap.size,
+            modifier = modifier,
+            state = state,
+            contentPadding = contentPadding,
+            reverseLayout = reverseLayout,
+            horizontalArrangement = horizontalArrangement,
+            verticalAlignment = verticalAlignment,
+            flingBehavior = flingBehavior,
+            userScrollEnabled = userScrollEnabled,
+        ) {
+            colorsMap.forEach { pair ->
+                item(
+                    key = pair.value.color.toArgb(),
+                    contentType = pair.value.color.toArgb(),
+                ) {
+                    // TODO: Add Modifier.semantics { collectionItemInfo }
+                    ColorItem(
+                        colorItem = pair.value,
+                        selected = pair.key == selectedItem,
+                        onClick = { onItemSelected(pair.key) },
+                        shape = shape,
+                        size = size,
+                        colorIndicatorColors = colorIndicatorColors,
+                        colorIndicatorBorderWidth = colorIndicatorBorderWidth,
+                    )
+                }
+            }
+        }
+    }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ColorPickerFlowRow(
+    itemsCount: Int,
+    modifier: Modifier,
+    horizontalArrangement: Arrangement.Horizontal,
+    verticalArrangement: Arrangement.Vertical,
+    maxItemsInEachRow: Int,
+    maxLines: Int,
+    overflow: FlowRowOverflow,
+    content: @Composable FlowRowScope.() -> Unit,
+) = FlowRow(
+    modifier = modifier.semantics {
+        collectionInfo = CollectionInfo(
+            rowCount = maxLines,
+            columnCount = itemsCount.coerceAtMost(maxItemsInEachRow),
+        )
+    },
+    horizontalArrangement = horizontalArrangement,
+    verticalArrangement = verticalArrangement,
+    maxItemsInEachRow = maxItemsInEachRow,
+    maxLines = maxLines,
+    overflow = overflow,
+    content = content,
+)
+
+@Composable
+private fun ColorPickerLazyRow(
+    itemsCount: Int,
+    modifier: Modifier,
+    state: LazyListState,
+    contentPadding: PaddingValues,
+    reverseLayout: Boolean,
+    horizontalArrangement: Arrangement.Horizontal,
+    verticalAlignment: Alignment.Vertical,
+    flingBehavior: FlingBehavior,
+    userScrollEnabled: Boolean,
+    content: LazyListScope.() -> Unit,
+) = LazyRow(
+    modifier = modifier.semantics {
+        collectionInfo = CollectionInfo(
+            rowCount = 1,
+            columnCount = itemsCount,
+        )
+    },
+    state = state,
+    contentPadding = contentPadding,
+    reverseLayout = reverseLayout,
+    horizontalArrangement = horizontalArrangement,
+    verticalAlignment = verticalAlignment,
+    flingBehavior = flingBehavior,
+    userScrollEnabled = userScrollEnabled,
+    content = content,
+)
 
 @Composable
 internal inline fun ColorItem(
@@ -314,6 +561,9 @@ internal fun ColorUnspecifiedIndicator(
     }
 }
 
+/**
+ * Represents the size of items in Color Picker.
+ */
 @Stable
 enum class ColorPickerSize {
     Small,
@@ -337,6 +587,9 @@ enum class ColorPickerSize {
         }
 }
 
+/**
+ * Color indicator border width on different states.
+ */
 @Immutable
 data class ColorIndicatorBorderWidth internal constructor(
     private val neutralBorderWidth: Dp,
@@ -352,6 +605,10 @@ data class ColorIndicatorBorderWidth internal constructor(
         }
 }
 
+/**
+ * Colors used on the UI elements of the color indicator that is on a specific state
+ * (e.g. selected, ...).
+ */
 @Immutable
 data class ColorIndicatorColors internal constructor(
     private val onDarkColor: Color,
@@ -366,6 +623,9 @@ data class ColorIndicatorColors internal constructor(
         }
 }
 
+/**
+ * Defaults used in [ColorPicker].
+ */
 object ColorPickerDefaults {
     val Shape: Shape = CircleShape
 

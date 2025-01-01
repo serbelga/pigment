@@ -16,9 +16,12 @@
 
 package dev.sergiobelda.pigment.samples.colorpicker
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
@@ -28,6 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.colorpicker.ColorPicker
 import dev.sergiobelda.pigment.colorpicker.ColorPickerDefaults
+import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
 import dev.sergiobelda.pigment.colorpicker.ColorPickerSize
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -84,6 +88,29 @@ fun ColorPickerFlowRowCustomSample() {
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Preview
+@Composable
+fun ColorPickerFlowRowMapSample() {
+    val colorMap = remember {
+        mutableStateMapOf(
+            "Red" to ColorPickerItem(Color.Red),
+            "Blue" to ColorPickerItem(Color.Blue),
+        )
+    }
+    val (selectedItem, onItemSelected) = remember {
+        mutableStateOf("Red")
+    }
+    Column {
+        BasicText(text = selectedItem)
+        ColorPicker.FlowRow(
+            colorsMap = colorMap,
+            selectedItem = selectedItem,
+            onItemSelected = onItemSelected,
+        )
+    }
+}
+
 @Preview
 @Composable
 fun ColorPickerLazyRowSample() {
@@ -133,4 +160,26 @@ fun ColorPickerLazyRowCustomSample() {
             onLightColor = Color.Blue,
         ),
     )
+}
+
+@Preview
+@Composable
+fun ColorPickerLazyRowMapSample() {
+    val colorMap = remember {
+        mutableStateMapOf(
+            "Red" to ColorPickerItem(Color.Red),
+            "Blue" to ColorPickerItem(Color.Blue),
+        )
+    }
+    val (selectedItem, onItemSelected) = remember {
+        mutableStateOf("Red")
+    }
+    Column {
+        BasicText(text = selectedItem)
+        ColorPicker.LazyRow(
+            colorsMap = colorMap,
+            selectedItem = selectedItem,
+            onItemSelected = onItemSelected,
+        )
+    }
 }
