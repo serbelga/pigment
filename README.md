@@ -10,7 +10,7 @@
 
 ```gradle
 dependencies {
-    implementation 'dev.sergiobelda.pigment:pigment:$VERSION'
+    implementation("dev.sergiobelda.pigment:pigment:$VERSION")
 }
 ```
 
@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation 'dev.sergiobelda.pigment:pigment:$VERSION'
+                implementation("dev.sergiobelda.pigment:pigment:$VERSION")
             }
         }
     }
