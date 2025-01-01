@@ -1,12 +1,30 @@
 # Pigment
 
+🎨 A color selector for Compose Multiplatform.
+
+## Download
+
 [![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.pigment/pigment)](https://search.maven.org/search?q=g:dev.sergiobelda.pigment)
 
-🎨 A color selector for Jetpack Compose
+### Android
 
 ```gradle
 dependencies {
     implementation 'dev.sergiobelda.pigment:pigment:$VERSION'
+}
+```
+
+### Multiplatform
+
+```gradle
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation 'dev.sergiobelda.pigment:pigment:$VERSION'
+            }
+        }
+    }
 }
 ```
 
