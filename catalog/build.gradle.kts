@@ -38,6 +38,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.pigment)
+                implementation(projects.pigment.samples)
 
                 implementation(compose.components.resources)
                 implementation(compose.material3)
