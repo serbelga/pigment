@@ -2,8 +2,38 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
-    kotlin("android")
+    alias(libs.plugins.kotlinMultiplatform)
     id("dev.sergiobelda.pigment-spotless")
+}
+
+kotlin {
+    androidTarget()
+    jvm()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    js {
+        browser()
+        binaries.executable()
+    }
+
+    sourceSets {
+
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.pigment)
+
+                implementation(compose.foundation)
+                implementation(compose.ui)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(compose.preview)
+                implementation(compose.uiTooling)
+            }
+        }
+    }
 }
 
 android {
@@ -18,17 +48,4 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-    buildFeatures {
-        compose = true
-    }
-}
-
-dependencies {
-    implementation(projects.pigment)
-
-    implementation(compose.components.resources)
-    implementation(compose.foundation)
-    implementation(compose.preview)
-    implementation(compose.ui)
-    implementation(compose.uiTooling)
 }

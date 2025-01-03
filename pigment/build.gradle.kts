@@ -95,3 +95,9 @@ tasks.withType<Jar> {
 compose.resources {
     packageOfResClass = "dev.sergiobelda.pigment.resources"
 }
+
+dokka {
+    dokkaSourceSets.configureEach {
+        samples.from( "$rootDir/${projects.pigment.name}/samples/src/commonMain/kotlin")
+    }
+}

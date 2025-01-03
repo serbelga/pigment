@@ -17,185 +17,51 @@
 package dev.sergiobelda.pigment.catalog.main
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.sergiobelda.pigment.catalog.Res
-import dev.sergiobelda.pigment.catalog.ok
-import dev.sergiobelda.pigment.catalog.open_bottomsheet
-import dev.sergiobelda.pigment.catalog.open_dialog
-import dev.sergiobelda.pigment.catalog.select_color
-import dev.sergiobelda.pigment.colorpicker.ColorPicker
-import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
-import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 internal fun PigmentDemo() {
-    val scaffoldState = rememberBottomSheetScaffoldState()
-    val coroutineScope = rememberCoroutineScope()
-    val dialogState = remember { mutableStateOf(false) }
-
-    val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
-
-    BottomSheetScaffold(
-        sheetContent = {
-            ColorPickerBottomSheet(
-                colors = colorPickerItems,
-                selectedColor = selectedColor,
-                onColorSelected = onColorSelected,
-            )
-        },
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 0.dp,
-    ) {
+    Scaffold { paddingValues ->
         Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .systemBarsPadding(),
+                .padding(paddingValues),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 12.dp),
-            ) {
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    },
-                ) {
-                    Text(stringResource(Res.string.open_bottomsheet))
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Button(
-                    onClick = { dialogState.value = true },
-                ) {
-                    Text(stringResource(Res.string.open_dialog))
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .drawBehind {
-                        drawRect(selectedColor)
-                    },
-            ) {
-                ColorPicker.LazyRow(
-                    colors = colorPickerItems,
-                    selectedColor = selectedColor,
-                    onColorSelected = onColorSelected,
-                )
-            }
-        }
-        if (dialogState.value) {
-            ColorPickerDialog(
-                colors = colorPickerItems,
-                selectedColor = selectedColor,
-                onColorSelected = onColorSelected,
-                onDismissRequest = { dialogState.value = false },
-            )
+            ColorPickerFlowRowDemo()
+            ColorPickerLazyRowDemo()
         }
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun ColorPickerDialog(
-    colors: List<ColorPickerItem>,
-    selectedColor: Color,
-    onColorSelected: (color: Color) -> Unit,
-    onDismissRequest: () -> Unit,
-) {
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        title = {
-            Text(
-                text = stringResource(Res.string.select_color),
-                style = MaterialTheme.typography.bodySmall,
-            )
-        },
-        text = {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-            ) {
-                ColorPicker.FlowRow(
-                    colors = colors,
-                    selectedColor = selectedColor,
-                    onColorSelected = onColorSelected,
-                )
-            }
-        },
-        confirmButton = {
-            Button(onClick = onDismissRequest) {
-                Text(stringResource(Res.string.ok))
-            }
-        },
-    )
+private fun ColorPickerFlowRowDemo() {
+    Column {
+        Text(
+            "ColorPicker.FlowRow",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(horizontal = 12.dp),
+        )
+        ColorPickerFlowRowSample()
+    }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun ColorPickerBottomSheet(
-    colors: List<ColorPickerItem>,
-    selectedColor: Color,
-    onColorSelected: (color: Color) -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
+private fun ColorPickerLazyRowDemo() {
+    Column {
         Text(
-            text = stringResource(Res.string.select_color),
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .padding(start = 16.dp),
+            "ColorPicker.LazyRow",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
-        HorizontalDivider()
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 12.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            ColorPicker.FlowRow(
-                colors = colors,
-                selectedColor = selectedColor,
-                onColorSelected = onColorSelected,
-            )
-        }
+        ColorPickerLazyRowSample()
     }
 }
