@@ -8,7 +8,7 @@
 
 ### Android
 
-```gradle
+```kotlin
 dependencies {
     implementation("dev.sergiobelda.pigment:pigment:$VERSION")
 }
@@ -16,7 +16,7 @@ dependencies {
 
 ### Multiplatform
 
-```gradle
+```kotlin
 kotlin {
     sourceSets {
         val commonMain by getting {
