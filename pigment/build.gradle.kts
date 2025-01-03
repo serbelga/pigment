@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.pigment-spotless")
