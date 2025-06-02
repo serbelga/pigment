@@ -39,10 +39,10 @@ kotlin {
 android {
     namespace = "dev.sergiobelda.pigment.samples"
 
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 21
     }
 
     kotlin {
