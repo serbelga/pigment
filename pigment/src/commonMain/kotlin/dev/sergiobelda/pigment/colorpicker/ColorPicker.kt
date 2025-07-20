@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.FlowRowOverflow
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -87,7 +86,6 @@ object ColorPicker {
      * @param verticalArrangement The vertical arrangement of the layout's virtual rows.
      * @param maxItemsInEachRow The maximum number of items per row.
      * @param maxLines The max number of rows.
-     * @param overflow The strategy to handle overflowing items.
      *
      * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowSample
      *
@@ -108,7 +106,6 @@ object ColorPicker {
         verticalArrangement: Arrangement.Vertical = Arrangement.Top,
         maxItemsInEachRow: Int = Int.MAX_VALUE,
         maxLines: Int = Int.MAX_VALUE,
-        overflow: FlowRowOverflow = FlowRowOverflow.Clip,
     ) {
         ColorPickerFlowRow(
             itemsCount = colors.size,
@@ -117,7 +114,6 @@ object ColorPicker {
             verticalArrangement = verticalArrangement,
             maxItemsInEachRow = maxItemsInEachRow,
             maxLines = maxLines,
-            overflow = overflow,
         ) {
             colors.forEach { colorItem ->
                 // TODO: Add Modifier.semantics { collectionItemInfo }
@@ -151,7 +147,6 @@ object ColorPicker {
      * @param verticalArrangement The vertical arrangement of the layout's virtual rows.
      * @param maxItemsInEachRow The maximum number of items per row.
      * @param maxLines The max number of rows.
-     * @param overflow The strategy to handle overflowing items.
      *
      * @sample dev.sergiobelda.pigment.samples.colorpicker.ColorPickerFlowRowMapSample
      *
@@ -172,7 +167,6 @@ object ColorPicker {
         verticalArrangement: Arrangement.Vertical = Arrangement.Top,
         maxItemsInEachRow: Int = Int.MAX_VALUE,
         maxLines: Int = Int.MAX_VALUE,
-        overflow: FlowRowOverflow = FlowRowOverflow.Clip,
     ) {
         ColorPickerFlowRow(
             itemsCount = colorsMap.size,
@@ -181,7 +175,6 @@ object ColorPicker {
             verticalArrangement = verticalArrangement,
             maxItemsInEachRow = maxItemsInEachRow,
             maxLines = maxLines,
-            overflow = overflow,
         ) {
             colorsMap.forEach { pair ->
                 // TODO: Add Modifier.semantics { collectionItemInfo }
@@ -373,7 +366,6 @@ private fun ColorPickerFlowRow(
     verticalArrangement: Arrangement.Vertical,
     maxItemsInEachRow: Int,
     maxLines: Int,
-    overflow: FlowRowOverflow,
     content: @Composable FlowRowScope.() -> Unit,
 ) = FlowRow(
     modifier = modifier.semantics {
@@ -386,7 +378,6 @@ private fun ColorPickerFlowRow(
     verticalArrangement = verticalArrangement,
     maxItemsInEachRow = maxItemsInEachRow,
     maxLines = maxLines,
-    overflow = overflow,
     content = content,
 )
 
@@ -610,6 +601,7 @@ data class ColorIndicatorBorderWidth internal constructor(
  * (e.g. selected, ...).
  */
 @Immutable
+@ConsistentCopyVisibility
 data class ColorIndicatorColors internal constructor(
     private val onDarkColor: Color,
     private val onLightColor: Color,
