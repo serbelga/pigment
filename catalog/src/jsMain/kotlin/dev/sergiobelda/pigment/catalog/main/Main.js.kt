@@ -17,7 +17,7 @@
 package dev.sergiobelda.pigment.catalog.main
 
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 import dev.sergiobelda.pigment.catalog.PigmentCatalogScreen
 import org.jetbrains.compose.resources.configureWebResources
 import org.jetbrains.skiko.wasm.onWasmReady
@@ -28,7 +28,7 @@ fun main() {
         resourcePathMapping { path -> "./$path" }
     }
     onWasmReady {
-        CanvasBasedWindow("Pigment Catalog Sample") {
+        ComposeViewport {
             PigmentCatalogScreen()
         }
     }
