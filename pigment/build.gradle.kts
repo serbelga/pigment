@@ -97,6 +97,7 @@ compose.resources {
 
 dokka {
     dokkaSourceSets.configureEach {
-        samples.from( "$rootDir/${projects.pigment.name}/samples/src/commonMain/kotlin")
+        // https://github.com/Kotlin/dokka/issues/3701
+        // samples.from( "$rootDir/${projects.pigment.name}/samples/src/commonMain/kotlin")
     }
 }
