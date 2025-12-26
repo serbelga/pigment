@@ -70,7 +70,6 @@ import org.jetbrains.compose.resources.vectorResource
  * A tool that allow user select a color item.
  */
 object ColorPicker {
-
     /**
      * A ColorPicker that follows the [FlowRow] layout that receives a list of [ColorPickerItem].
      *
@@ -368,12 +367,14 @@ private fun ColorPickerFlowRow(
     maxLines: Int,
     content: @Composable FlowRowScope.() -> Unit,
 ) = FlowRow(
-    modifier = modifier.semantics {
-        collectionInfo = CollectionInfo(
-            rowCount = maxLines,
-            columnCount = itemsCount.coerceAtMost(maxItemsInEachRow),
-        )
-    },
+    modifier =
+        modifier.semantics {
+            collectionInfo =
+                CollectionInfo(
+                    rowCount = maxLines,
+                    columnCount = itemsCount.coerceAtMost(maxItemsInEachRow),
+                )
+        },
     horizontalArrangement = horizontalArrangement,
     verticalArrangement = verticalArrangement,
     maxItemsInEachRow = maxItemsInEachRow,
@@ -394,12 +395,14 @@ private fun ColorPickerLazyRow(
     userScrollEnabled: Boolean,
     content: LazyListScope.() -> Unit,
 ) = LazyRow(
-    modifier = modifier.semantics {
-        collectionInfo = CollectionInfo(
-            rowCount = 1,
-            columnCount = itemsCount,
-        )
-    },
+    modifier =
+        modifier.semantics {
+            collectionInfo =
+                CollectionInfo(
+                    rowCount = 1,
+                    columnCount = itemsCount,
+                )
+        },
     state = state,
     contentPadding = contentPadding,
     reverseLayout = reverseLayout,
@@ -421,29 +424,29 @@ internal inline fun ColorItem(
     colorIndicatorBorderWidth: ColorIndicatorBorderWidth,
 ) {
     Box(
-        modifier = Modifier
-            .padding(size.itemSpacing())
-            .graphicsLayer {
-                this.shape = shape
-                clip = true
-            }
-            .clickable(
-                enabled = colorItem.enabled,
-                indication = ripple(),
-                interactionSource = null,
-            ) {
-                onClick.invoke()
-            },
-    ) {
-        val indicatorSize = size.indicatorSize()
-        Box(
-            modifier = Modifier
-                .padding(ColorItemInnerPadding)
+        modifier =
+            Modifier
+                .padding(size.itemSpacing())
                 .graphicsLayer {
                     this.shape = shape
                     clip = true
-                }
-                .requiredSize(indicatorSize),
+                }.clickable(
+                    enabled = colorItem.enabled,
+                    indication = ripple(),
+                    interactionSource = null,
+                ) {
+                    onClick.invoke()
+                },
+    ) {
+        val indicatorSize = size.indicatorSize()
+        Box(
+            modifier =
+                Modifier
+                    .padding(ColorItemInnerPadding)
+                    .graphicsLayer {
+                        this.shape = shape
+                        clip = true
+                    }.requiredSize(indicatorSize),
         ) {
             when {
                 colorItem.color != Color.Unspecified -> {
@@ -482,31 +485,33 @@ internal fun ColorIndicator(
 
     // Translucent color background pattern
     Box(
-        modifier = Modifier
-            .width(translucentColorWidth)
-            .fillMaxHeight()
-            .drawBehind {
-                drawRect(TranslucentContrastColor)
-            },
+        modifier =
+            Modifier
+                .width(translucentColorWidth)
+                .fillMaxHeight()
+                .drawBehind {
+                    drawRect(TranslucentContrastColor)
+                },
     )
     // Color indicator
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .drawBehind {
-                drawRect(color)
-            }
-            .border(
-                width = borderWidth,
-                color = selectedColor,
-                shape = shape,
-            ),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .drawBehind {
+                    drawRect(color)
+                }.border(
+                    width = borderWidth,
+                    color = selectedColor,
+                    shape = shape,
+                ),
     ) {
         if (selected) {
             Image(
-                imageVector = vectorResource(
-                    Res.drawable.ic_check_24px,
-                ),
+                imageVector =
+                    vectorResource(
+                        Res.drawable.ic_check_24px,
+                    ),
                 contentDescription = stringResource(Res.string.selected),
                 colorFilter = ColorFilter.tint(selectedColor),
                 modifier = Modifier.align(Alignment.Center),
@@ -516,30 +521,33 @@ internal fun ColorIndicator(
 }
 
 @Composable
-internal fun ColorUnspecifiedIndicator(
-    selected: Boolean,
-) {
+internal fun ColorUnspecifiedIndicator(selected: Boolean) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .drawBehind {
-                drawRect(ColorUnspecifiedIndicatorBackgroundColor)
-            },
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .drawBehind {
+                    drawRect(ColorUnspecifiedIndicatorBackgroundColor)
+                },
     ) {
         Image(
-            imageVector = vectorResource(
-                Res.drawable.ic_format_color_reset_24px,
-            ),
+            imageVector =
+                vectorResource(
+                    Res.drawable.ic_format_color_reset_24px,
+                ),
             contentDescription = stringResource(Res.string.color_off),
-            modifier = Modifier
-                .align(Alignment.Center),
-            colorFilter = ColorFilter.tint(
-                color = if (selected) {
-                    ColorUnspecifiedIndicatorIconSelectedColor
-                } else {
-                    ColorUnspecifiedIndicatorIconUnselectedColor
-                },
-            ),
+            modifier =
+                Modifier
+                    .align(Alignment.Center),
+            colorFilter =
+                ColorFilter.tint(
+                    color =
+                        if (selected) {
+                            ColorUnspecifiedIndicatorIconSelectedColor
+                        } else {
+                            ColorUnspecifiedIndicatorIconUnselectedColor
+                        },
+                ),
         )
         if (selected) {
             Image(
@@ -588,7 +596,10 @@ data class ColorIndicatorBorderWidth internal constructor(
     private val unselectedBorderWidth: Dp,
 ) {
     @Stable
-    internal fun borderWidth(color: Color, selected: Boolean): Dp =
+    internal fun borderWidth(
+        color: Color,
+        selected: Boolean,
+    ): Dp =
         when {
             selected -> selectedBorderWidth
             color.luminance() !in 0.1..0.9 -> neutralBorderWidth
@@ -654,9 +665,10 @@ object ColorPickerDefaults {
 
 private const val ColorUnspecifiedIndicatorIconAlpha: Float = 0.2f
 
-private val ColorUnspecifiedIndicatorIconSelectedColor: Color = Color.Black.copy(
-    alpha = ColorUnspecifiedIndicatorIconAlpha,
-)
+private val ColorUnspecifiedIndicatorIconSelectedColor: Color =
+    Color.Black.copy(
+        alpha = ColorUnspecifiedIndicatorIconAlpha,
+    )
 
 private val ColorUnspecifiedIndicatorIconUnselectedColor: Color = Color.Black
 
