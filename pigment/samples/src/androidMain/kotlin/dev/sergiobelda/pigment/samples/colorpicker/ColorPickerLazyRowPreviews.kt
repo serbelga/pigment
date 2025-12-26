@@ -47,9 +47,10 @@ private fun ColorPickerLazyRowSizePreview(
     @PreviewParameter(ColorPickerSizeProvider::class) size: ColorPickerSize,
 ) {
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
+    val (selectedColor, onColorSelected) =
+        remember {
+            mutableStateOf(Color.Unspecified)
+        }
     ColorPicker.LazyRow(
         colors = colorPickerItems,
         selectedColor = selectedColor,
@@ -62,18 +63,20 @@ private fun ColorPickerLazyRowSizePreview(
 @Composable
 private fun ColorPickerLazyRowCustomPreview() {
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
+    val (selectedColor, onColorSelected) =
+        remember {
+            mutableStateOf(Color.Unspecified)
+        }
     ColorPicker.LazyRow(
         colors = colorPickerItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected,
         shape = RoundedCornerShape(12.dp),
         size = ColorPickerSize.Small,
-        colorIndicatorColors = ColorPickerDefaults.colorIndicatorColors(
-            onDarkColor = Color.LightGray,
-            onLightColor = Color.Blue,
-        ),
+        colorIndicatorColors =
+            ColorPickerDefaults.colorIndicatorColors(
+                onDarkColor = Color.LightGray,
+                onLightColor = Color.Blue,
+            ),
     )
 }

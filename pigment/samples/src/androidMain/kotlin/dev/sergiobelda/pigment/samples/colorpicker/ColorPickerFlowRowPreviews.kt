@@ -49,9 +49,10 @@ private fun ColorPickerFlowRowSizePreview(
     @PreviewParameter(ColorPickerSizeProvider::class) size: ColorPickerSize,
 ) {
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
+    val (selectedColor, onColorSelected) =
+        remember {
+            mutableStateOf(Color.Unspecified)
+        }
     ColorPicker.FlowRow(
         colors = colorPickerItems,
         selectedColor = selectedColor,
@@ -65,18 +66,20 @@ private fun ColorPickerFlowRowSizePreview(
 @Composable
 private fun ColorPickerFlowRowCustomPreview() {
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
+    val (selectedColor, onColorSelected) =
+        remember {
+            mutableStateOf(Color.Unspecified)
+        }
     ColorPicker.FlowRow(
         colors = colorPickerItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected,
         shape = RoundedCornerShape(12.dp),
         size = ColorPickerSize.Small,
-        colorIndicatorColors = ColorPickerDefaults.colorIndicatorColors(
-            onDarkColor = Color.LightGray,
-            onLightColor = Color.Blue,
-        ),
+        colorIndicatorColors =
+            ColorPickerDefaults.colorIndicatorColors(
+                onDarkColor = Color.LightGray,
+                onLightColor = Color.Blue,
+            ),
     )
 }

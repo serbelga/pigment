@@ -30,9 +30,10 @@ import dev.sergiobelda.pigment.colorpicker.ColorPickerItem
 @Composable
 fun ColorPickerLazyRowSample() {
     val colorPickerItems = remember { colorPickerItems.toMutableStateList() }
-    val (selectedColor, onColorSelected) = remember {
-        mutableStateOf(Color.Unspecified)
-    }
+    val (selectedColor, onColorSelected) =
+        remember {
+            mutableStateOf(Color.Unspecified)
+        }
     Column {
         ColorPicker.LazyRow(
             colors = colorPickerItems,
@@ -45,15 +46,17 @@ fun ColorPickerLazyRowSample() {
 
 @Composable
 fun ColorPickerLazyRowMapSample() {
-    val colorMap = remember {
-        mutableStateMapOf(
-            "Red" to ColorPickerItem(Color.Red),
-            "Blue" to ColorPickerItem(Color.Blue),
-        )
-    }
-    val (selectedItem, onItemSelected) = remember {
-        mutableStateOf("Red")
-    }
+    val colorMap =
+        remember {
+            mutableStateMapOf(
+                "Red" to ColorPickerItem(Color.Red),
+                "Blue" to ColorPickerItem(Color.Blue),
+            )
+        }
+    val (selectedItem, onItemSelected) =
+        remember {
+            mutableStateOf("Red")
+        }
     Column {
         ColorPicker.LazyRow(
             colorsMap = colorMap,

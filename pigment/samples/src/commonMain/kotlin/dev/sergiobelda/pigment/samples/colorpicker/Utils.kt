@@ -29,21 +29,19 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun ColorVisualizer(
-    color: Color,
-) {
+internal fun ColorVisualizer(color: Color) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(64.dp)
-            .padding(top = 12.dp)
-            .padding(horizontal = 12.dp)
-            .graphicsLayer {
-                shape = RoundedCornerShape(12.dp)
-                clip = true
-            }
-            .drawBehind {
-                drawRect(color)
-            },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(64.dp)
+                .padding(top = 12.dp)
+                .padding(horizontal = 12.dp)
+                .graphicsLayer {
+                    shape = RoundedCornerShape(12.dp)
+                    clip = true
+                }.drawBehind {
+                    drawRect(color)
+                },
     )
 }

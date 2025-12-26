@@ -16,12 +16,11 @@
 
 package dev.sergiobelda.pigment.colorpicker
 
-// Disabled for now until
-// https://youtrack.jetbrains.com/issue/CMP-7276/IllegalStateException-using-Compose-Components-Resources-and-Paparazzi
-// is resolved.
-/*
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalInspectionMode
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
@@ -34,35 +33,35 @@ import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
 class ColorPickerTest {
-
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5,
-        renderingMode = SessionParams.RenderingMode.SHRINK,
-        showSystemUi = false,
-    )
+    val paparazzi =
+        Paparazzi(
+            deviceConfig = DeviceConfig.PIXEL_5,
+            renderingMode = SessionParams.RenderingMode.SHRINK,
+            showSystemUi = false,
+        )
 
-    @OptIn(ExperimentalLayoutApi::class)
     @Test
     fun FlowRow(
         @TestParameter size: ColorPickerSize,
     ) {
-        paparazzi.snapshot {
-            ColorPicker.FlowRow(
-                colors = colorPickerItems,
-                selectedColor = Color.Unspecified,
-                onColorSelected = {},
-                size = size,
-            )
+        snapshot {
+            CompositionLocalProvider(LocalInspectionMode provides true) {
+                ColorPicker.FlowRow(
+                    colors = colorPickerItems,
+                    selectedColor = Color.Unspecified,
+                    onColorSelected = {},
+                    size = size,
+                )
+            }
         }
     }
 
-    @OptIn(ExperimentalLayoutApi::class)
     @Test
     fun FlowRow(
         @TestParameter color: ColorTestCase,
     ) {
-        paparazzi.snapshot {
+        snapshot {
             ColorPicker.FlowRow(
                 colors = colorPickerItems,
                 selectedColor = color.value,
@@ -75,7 +74,7 @@ class ColorPickerTest {
     fun LazyRow(
         @TestParameter size: ColorPickerSize,
     ) {
-        paparazzi.snapshot {
+        snapshot {
             ColorPicker.LazyRow(
                 colors = colorPickerItems,
                 selectedColor = Color.Unspecified,
@@ -84,5 +83,16 @@ class ColorPickerTest {
             )
         }
     }
+
+    // Workaround to keep using CompositionLocalProvider until
+    // https://youtrack.jetbrains.com/issue/CMP-7276/IllegalStateException-using-Compose-Components-Resources-and-Paparazzi
+    // is resolved.
+    private fun snapshot(content: @Composable () -> Unit) {
+        paparazzi.snapshot {
+            CompositionLocalProvider(
+                LocalInspectionMode provides true,
+                content = content,
+            )
+        }
+    }
 }
-*/

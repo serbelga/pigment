@@ -27,11 +27,12 @@ fun PigmentCatalogTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = if (darkTheme) {
-        darkColorScheme()
-    } else {
-        lightColorScheme()
-    }
+    val colorScheme =
+        if (darkTheme) {
+            darkColorScheme()
+        } else {
+            lightColorScheme()
+        }
     MaterialTheme(
         colorScheme = colorScheme,
         content = content,

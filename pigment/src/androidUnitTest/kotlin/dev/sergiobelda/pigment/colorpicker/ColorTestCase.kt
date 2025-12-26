@@ -18,7 +18,9 @@ package dev.sergiobelda.pigment.colorpicker
 
 import androidx.compose.ui.graphics.Color
 
-enum class ColorTestCase(val value: Color) {
+enum class ColorTestCase(
+    val value: Color,
+) {
     Unspecified(Color.Unspecified),
     White(Color.White),
     Black(Color.Black),

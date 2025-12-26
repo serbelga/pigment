@@ -33,8 +33,9 @@ internal fun PigmentDemo() {
     Scaffold { paddingValues ->
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .padding(paddingValues),
+            modifier =
+                Modifier
+                    .padding(paddingValues),
         ) {
             ColorPickerFlowRowDemo()
             ColorPickerLazyRowDemo()

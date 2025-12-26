@@ -19,12 +19,13 @@ package dev.sergiobelda.pigment.catalog
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
-fun main() = application {
-    Window(
-        resizable = false,
-        onCloseRequest = ::exitApplication,
-        title = "Pigment Demo Sample",
-    ) {
-        PigmentCatalogScreen()
+fun main() =
+    application {
+        Window(
+            resizable = false,
+            onCloseRequest = ::exitApplication,
+            title = "Pigment Demo Sample",
+        ) {
+            PigmentCatalogScreen()
+        }
     }
-}
