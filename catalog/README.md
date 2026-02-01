@@ -2,8 +2,8 @@
 
 ### Run on Desktop
 
-`./gradlew :catalog:run`
+`./gradlew :catalog:desktop:run`
 
 ### Run on Web
 
-`./gradlew :catalog:jsBrowserRun`
+`./gradlew :catalog:shared:jsBrowserDevelopmentRun`

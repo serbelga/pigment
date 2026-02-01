@@ -43,6 +43,7 @@ kotlin {
             implementation(projects.pigment)
             implementation(projects.pigment.samples)
 
+            implementation(libs.jetbrains.compose.components.resources)
             implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.ui)
             implementation(libs.jetbrains.kotlinx.collections.immutable)
