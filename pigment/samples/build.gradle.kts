@@ -1,13 +1,24 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.android.kotlinMultiplatformLibrary)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.jetbrains.kotlin.multiplatform)
     id("dev.sergiobelda.pigment-spotless")
 }
 
 kotlin {
-    androidTarget()
+    androidLibrary {
+        namespace = "dev.sergiobelda.pigment.samples"
+        compileSdk = 36
+        minSdk = 23
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     jvm()
     iosX64()
     iosArm64()
@@ -18,34 +29,17 @@ kotlin {
     }
 
     sourceSets {
+        commonMain.dependencies {
+            implementation(projects.pigment)
 
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.pigment)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.ui)
 
-                implementation(compose.foundation)
-                implementation(compose.ui)
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
-            }
+            implementation(libs.jetbrains.compose.uiToolingPreview)
         }
     }
 }
 
-android {
-    namespace = "dev.sergiobelda.pigment.samples"
-
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 23
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
+dependencies {
+    androidRuntimeClasspath(libs.jetbrains.compose.uiTooling)
 }

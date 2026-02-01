@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.samples.colorpicker
+package dev.sergiobelda.pigment.samples.colorpicker.previews
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import dev.sergiobelda.pigment.colorpicker.ColorPickerSize

@@ -17,7 +17,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "pigment-library"
 
-include(":catalog")
+include(":catalog:android")
+include(":catalog:desktop")
+include(":catalog:shared")
 include(":pigment")
 include(":pigment:samples")
 

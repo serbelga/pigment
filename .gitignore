@@ -16,3 +16,4 @@ local.properties
 /.idea/
 /pigment/samples/build/
 /.kotlin/
+/catalog/desktop/

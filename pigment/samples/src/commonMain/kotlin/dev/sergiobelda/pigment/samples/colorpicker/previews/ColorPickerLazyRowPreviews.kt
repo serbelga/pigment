@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.pigment.samples.colorpicker
+package dev.sergiobelda.pigment.samples.colorpicker.previews
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -28,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import dev.sergiobelda.pigment.colorpicker.ColorPicker
 import dev.sergiobelda.pigment.colorpicker.ColorPickerDefaults
 import dev.sergiobelda.pigment.colorpicker.ColorPickerSize
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowMapSample
+import dev.sergiobelda.pigment.samples.colorpicker.ColorPickerLazyRowSample
+import dev.sergiobelda.pigment.samples.colorpicker.colorPickerItems
 
 @Preview
 @Composable
@@ -55,7 +58,7 @@ private fun ColorPickerLazyRowSizePreview(
         colors = colorPickerItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected,
-        size = size,
+        // size = size,
     )
 }
 
