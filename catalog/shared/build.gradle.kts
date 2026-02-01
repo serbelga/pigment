@@ -55,7 +55,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "dev.sergiobelda.pigment.catalog.Main_jvmKt"
+        mainClass = "dev.sergiobelda.pigment.catalog.Main_Kt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
