@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -15,8 +14,8 @@ kotlin {
     androidLibrary {
         namespace = "dev.sergiobelda.pigment.catalog"
 
-        compileSdk = 36
-        minSdk = 23
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -35,7 +34,7 @@ kotlin {
     }
     js {
         browser()
-        binaries.executable()
+        useEsModules()
     }
 
     sourceSets {
@@ -43,22 +42,13 @@ kotlin {
             implementation(projects.pigment)
             implementation(projects.pigment.samples)
 
-            implementation(libs.jetbrains.compose.components.resources)
-            implementation(libs.jetbrains.compose.material3)
-            implementation(libs.jetbrains.compose.ui)
+            api(libs.jetbrains.compose.components.resources)
+            api(libs.jetbrains.compose.material3)
+            api(libs.jetbrains.compose.ui)
             implementation(libs.jetbrains.kotlinx.collections.immutable)
         }
         all {
             languageSettings.optIn("kotlin.RequiresOptIn")
-        }
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = "dev.sergiobelda.pigment.catalog.Main_Kt"
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
     }
 }

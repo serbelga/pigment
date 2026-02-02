@@ -20,6 +20,7 @@ rootProject.name = "pigment-library"
 include(":catalog:android")
 include(":catalog:desktop")
 include(":catalog:shared")
+include(":catalog:web")
 include(":pigment")
 include(":pigment:samples")
 

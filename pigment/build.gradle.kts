@@ -18,8 +18,8 @@ version = libs.versions.pigment.get()
 kotlin {
     androidLibrary {
         namespace = "dev.sergiobelda.pigment"
-        compileSdk = 36
-        minSdk = 23
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)

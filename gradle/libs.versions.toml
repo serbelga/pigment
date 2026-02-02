@@ -1,6 +1,9 @@
 [versions]
 activity = "1.12.3"
+android-compileSdk = "36"
 android-gradlePlugin = "9.0.0"
+android-minSdk = "24"
+android-targetSdk = "36"
 appcompat = "1.7.1"
 composeMultiplatform = "1.10.0"
 coreKtx = "1.17.0"

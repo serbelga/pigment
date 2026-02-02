@@ -11,8 +11,8 @@ plugins {
 kotlin {
     androidLibrary {
         namespace = "dev.sergiobelda.pigment.samples"
-        compileSdk = 36
-        minSdk = 23
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -34,7 +34,6 @@ kotlin {
 
             implementation(libs.jetbrains.compose.foundation)
             implementation(libs.jetbrains.compose.ui)
-
             implementation(libs.jetbrains.compose.uiToolingPreview)
         }
     }
