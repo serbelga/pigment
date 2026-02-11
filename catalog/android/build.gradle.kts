@@ -21,7 +21,7 @@ android {
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(libs.versions.jdk.get().toInt())
     }
     buildFeatures {
         compose = true

@@ -6,7 +6,7 @@ group = "dev.sergiobelda.pigment.buildlogic.convention"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get().toInt())
     }
 }
 

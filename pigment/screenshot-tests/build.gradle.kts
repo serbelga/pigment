@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.composeCompiler)
@@ -16,7 +14,7 @@ android {
     }
 
     kotlin {
-        jvmToolchain(21)
+        jvmToolchain(libs.versions.jdkPaparazzi.get().toInt())
     }
 }
 
