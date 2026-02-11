@@ -1,5 +1,5 @@
 [versions]
-activity = "1.12.3"
+activity = "1.12.4"
 android-compileSdk = "36"
 android-gradlePlugin = "9.0.0"
 android-minSdk = "24"
