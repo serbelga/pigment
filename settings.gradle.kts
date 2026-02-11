@@ -4,6 +4,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://central.sonatype.com/repository/maven-snapshots/")
     }
 }
 dependencyResolutionManagement {
@@ -12,6 +13,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://central.sonatype.com/repository/maven-snapshots/")
     }
 }
 
@@ -23,6 +25,5 @@ include(":catalog:shared")
 include(":catalog:web")
 include(":pigment")
 include(":pigment:samples")
-include(":pigment:screenshot-tests")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
