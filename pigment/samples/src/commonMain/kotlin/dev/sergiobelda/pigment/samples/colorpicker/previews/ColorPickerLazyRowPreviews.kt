@@ -58,7 +58,7 @@ private fun ColorPickerLazyRowSizePreview(
         colors = colorPickerItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected,
-        // size = size,
+        size = size,
     )
 }
 

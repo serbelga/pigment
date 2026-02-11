@@ -3,13 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.kotlinMultiplatformLibrary)
-    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.pigment-spotless")
-    // alias(libs.plugins.paparazzi)
 }
 
 group = "dev.sergiobelda.pigment"
@@ -27,7 +27,7 @@ kotlin {
 
         androidResources.enable = true
 
-        withHostTest {}
+        withHostTest { isIncludeAndroidResources = true }
     }
     jvm()
     iosX64()
