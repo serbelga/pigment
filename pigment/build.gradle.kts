@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.jetbrains.dokka)
     alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.multiplatform)
-    alias(libs.plugins.paparazzi)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.pigment-spotless")
 }
@@ -43,12 +42,6 @@ kotlin {
             implementation(libs.jetbrains.compose.components.resources)
             implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.ui)
-        }
-        androidMain.dependencies {
-            implementation(libs.androidx.appcompat)
-        }
-        getByName("androidHostTest").dependencies {
-            implementation(libs.google.testParameterInjector)
         }
     }
 }

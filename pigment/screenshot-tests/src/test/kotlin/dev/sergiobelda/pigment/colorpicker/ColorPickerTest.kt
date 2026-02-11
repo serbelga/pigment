@@ -16,7 +16,6 @@
 
 package dev.sergiobelda.pigment.colorpicker
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color

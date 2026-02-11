@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'oracle'
 
       - name: Setup Python
         uses: actions/setup-python@v6

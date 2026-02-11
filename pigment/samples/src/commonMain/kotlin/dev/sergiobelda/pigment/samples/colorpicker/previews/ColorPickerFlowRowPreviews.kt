@@ -60,7 +60,7 @@ private fun ColorPickerFlowRowSizePreview(
         colors = colorPickerItems,
         selectedColor = selectedColor,
         onColorSelected = onColorSelected,
-        // size = size,
+        size = size,
     )
 }
 

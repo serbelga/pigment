@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-java@v5
       with:
         java-version: '21'
-        distribution: 'temurin'
+        distribution: 'oracle'
         cache: gradle  
     - name: Run spotlessCheck
       run: ./gradlew spotlessCheck
