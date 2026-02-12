@@ -1,8 +1,10 @@
 plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.dokka) apply false
-    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.kotlinMultiplatformLibrary) apply false
+    alias(libs.plugins.jetbrains.dokka) apply false
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.jetbrains.kotlin.multiplatform) apply false
     alias(libs.plugins.paparazzi) apply false
 }

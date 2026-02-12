@@ -1,12 +1,12 @@
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.paparazzi)
+    alias(libs.plugins.android.kotlinMultiplatformLibrary)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
+    alias(libs.plugins.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.pigment-spotless")
 }
@@ -15,7 +15,19 @@ group = "dev.sergiobelda.pigment"
 version = libs.versions.pigment.get()
 
 kotlin {
-    androidTarget()
+    androidLibrary {
+        namespace = "dev.sergiobelda.pigment"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+
+        androidResources.enable = true
+
+        withHostTest { isIncludeAndroidResources = true }
+    }
     jvm()
     iosX64()
     iosArm64()
@@ -26,58 +38,11 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.components.resources)
-                implementation(compose.material3)
-                implementation(compose.ui)
-            }
+        commonMain.dependencies {
+            implementation(libs.jetbrains.compose.components.resources)
+            implementation(libs.jetbrains.compose.material3)
+            implementation(libs.jetbrains.compose.ui)
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.appcompat)
-            }
-        }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.google.testParameterInjector)
-            }
-        }
-        val jsMain by getting
-        val jsTest by getting
-        val jvmMain by getting
-        val jvmTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating
-        val iosTest by creating
-    }
-}
-
-android {
-    namespace = "dev.sergiobelda.pigment"
-
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 23
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    kotlin {
-        jvmToolchain(17)
     }
 }
 

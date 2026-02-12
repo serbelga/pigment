@@ -19,10 +19,8 @@ dependencies {
 ```kotlin
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("dev.sergiobelda.pigment:pigment:$VERSION")
-            }
+        commonMain.dependencies {
+            implementation("dev.sergiobelda.pigment:pigment:$VERSION")
         }
     }
 }
