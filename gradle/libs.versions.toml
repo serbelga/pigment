@@ -1,7 +1,7 @@
 [versions]
 activity = "1.13.0"
 android-compileSdk = "36"
-android-gradlePlugin = "9.1.0"
+android-gradlePlugin = "9.1.1"
 android-minSdk = "24"
 android-targetSdk = "36"
 appcompat = "1.7.1"
