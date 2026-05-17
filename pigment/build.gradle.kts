@@ -29,7 +29,6 @@ kotlin {
         withHostTest { isIncludeAndroidResources = true }
     }
     jvm()
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
     js {
