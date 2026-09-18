@@ -19,7 +19,7 @@ lifecycleRuntimeKtx = "2.11.0"
 paparazzi = "2.0.0-SNAPSHOT"
 pigment = "0.7.0"
 spotless = "8.2.1"
-testParameterInjector = "1.22"
+testParameterInjector = "1.23"
 vanniktechMavenPublishPlugin = "0.37.0"
 
 [libraries]
